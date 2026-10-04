@@ -1,0 +1,11 @@
+{
+  "name": "@kns/contracts",
+  "version": "0.1.0",
+  "private": true,
+  "type": "module",
+  "exports": {
+    "./module-contract": "./src/module-contract.ts",
+    "./knsmod": "./src/knsmod.ts"
+  },
+  "dependencies": { "@sinclair/typebox": "^0.34.0" }
+}
