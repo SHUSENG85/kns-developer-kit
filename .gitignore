@@ -1,0 +1,7 @@
+node_modules/
+build/
+dist/
+*.knsmod
+*.pem
+.env
+.env.*
