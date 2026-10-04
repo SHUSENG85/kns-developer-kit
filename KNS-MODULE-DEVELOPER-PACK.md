@@ -222,6 +222,14 @@ is read-only (`/tmp` is writable); `GET <apiBasePath>/health` returns
 `{"data":{"status":"ok","version":"<release version>"}}`. KNS switches traffic only after that
 health check reports the new version.
 
+The container environment is exactly: `PORT`, `HOST`, `NODE_ENV`, `KNS_MODULE_ID`, `KNS_RELEASE`,
+`DATABASE_URL` and `<ID>_SERVICE_TOKEN` (both generated per module; `<ID>` is the module ID
+upper-cased with `-` replaced by `_`, so `hello` receives `HELLO_SERVICE_TOKEN`), plus
+operator-supplied module settings such as `IDENTITY_URL` (the Core identity base URL). Do not read a
+generic `SERVICE_TOKEN` and do not rely on any other variable. The health version must be the version
+packaged in `module.json`. A module that owns no schema (`ownedSchemas: []`) still receives
+`DATABASE_URL` and should ignore it.
+
 ## 9. Testing and release evidence
 
 Before packaging, run:
@@ -259,7 +267,7 @@ migrations/NNNN_name.sql             # additive, owned schema only
 Commands:
 
 ```text
-npm run kns -- keygen <key-id> <dir-outside-the-repository>
+npm run kns -- keygen <key-id> <dir-outside-the-repository> [--module <module-id>]
 npm run kns -- pack <release-dir> --key <private.pem> --key-id <key-id> --out <dir>
 npm run kns -- verify kns-<id>-<version>.knsmod --trust <trust-store.json>
 ```
@@ -272,6 +280,14 @@ npm run kns -- verify kns-<id>-<version>.knsmod --trust <trust-store.json>
 
 It then self-verifies the package. Give the KNS operator only the public trust-store entry that
 `keygen` prints.
+
+`keygen --module <module-id>` also writes `<key-id>.trust-store.json` (public data only) so you can
+run the offline `verify` against your own key. `pack` creates the output directory.
+
+`examples/hello-kns` is a complete worked reference: `npm ci`, `npm test`, `npm run example:build`
+(real frontend build, real `linux/amd64` non-root API OCI image, a `module.json` carrying the real
+`artifacts.apiImage.manifestDigest`, and release evidence of the commands that actually ran), then
+`keygen`, `pack` and `verify`. Its `README.md` is the step-by-step recipe.
 
 Source ZIPs, repository checkouts and arbitrary ZIP files are not installable KNS module packages.
 
