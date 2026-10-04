@@ -1,0 +1,35 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://smkkn.top/developer-contract/v1/signature.schema.json",
+  "additionalProperties": false,
+  "type": "object",
+  "required": [
+    "algorithm",
+    "keyId",
+    "signedFile",
+    "signedSha256",
+    "signature"
+  ],
+  "properties": {
+    "algorithm": {
+      "const": "ed25519",
+      "type": "string"
+    },
+    "keyId": {
+      "pattern": "^[a-z0-9][a-z0-9._-]{2,79}$",
+      "type": "string"
+    },
+    "signedFile": {
+      "const": "package-manifest.json",
+      "type": "string"
+    },
+    "signedSha256": {
+      "pattern": "^[a-f0-9]{64}$",
+      "type": "string"
+    },
+    "signature": {
+      "pattern": "^[A-Za-z0-9+/]{86}==$",
+      "type": "string"
+    }
+  }
+}
