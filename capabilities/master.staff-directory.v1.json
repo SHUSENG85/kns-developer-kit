@@ -1,0 +1,151 @@
+{
+  "contractVersion": "1.0.0",
+  "capability": {
+    "id": "master.staff-directory",
+    "version": "1.0.0"
+  },
+  "ownerDomain": "staff",
+  "permission": "staff.directory.read",
+  "sensitivity": "SENSITIVE",
+  "operations": [
+    {
+      "operationId": "listMasterStaff",
+      "method": "GET",
+      "path": "/api/v1/master/staff",
+      "query": {
+        "cursor": {
+          "type": "string",
+          "optional": true,
+          "maxLength": 120
+        },
+        "limit": {
+          "type": "integer",
+          "optional": true,
+          "minimum": 1,
+          "maximum": 100,
+          "default": 25
+        }
+      },
+      "response": {
+        "type": "object",
+        "properties": {
+          "data": {
+            "type": "object",
+            "properties": {
+              "items": {
+                "type": "array",
+                "items": {
+                  "$ref": "#/$defs/staffSummary"
+                }
+              },
+              "nextCursor": {
+                "type": [
+                  "string",
+                  "null"
+                ]
+              }
+            },
+            "required": [
+              "items",
+              "nextCursor"
+            ],
+            "additionalProperties": false
+          }
+        },
+        "required": [
+          "data"
+        ],
+        "additionalProperties": false
+      }
+    },
+    {
+      "operationId": "readMasterStaff",
+      "method": "GET",
+      "path": "/api/v1/master/staff/{id}",
+      "pathParameters": {
+        "id": {
+          "type": "string",
+          "format": "uuid"
+        }
+      },
+      "response": {
+        "type": "object",
+        "properties": {
+          "data": {
+            "$ref": "#/$defs/staffDetail"
+          }
+        },
+        "required": [
+          "data"
+        ],
+        "additionalProperties": false
+      }
+    }
+  ],
+  "availability": {
+    "requiredCapabilityBehavior": "A module declaring this capability as required must fail safely when the provider is unavailable or incompatible.",
+    "authorization": "Capability availability does not grant staff.directory.read; the owning API remains authoritative."
+  },
+  "$defs": {
+    "staffSummary": {
+      "type": "object",
+      "properties": {
+        "id": {
+          "type": "string",
+          "format": "uuid"
+        },
+        "displayName": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 200
+        },
+        "archivedAt": {
+          "type": [
+            "string",
+            "null"
+          ]
+        }
+      },
+      "required": [
+        "id",
+        "displayName",
+        "archivedAt"
+      ],
+      "additionalProperties": false
+    },
+    "staffDetail": {
+      "type": "object",
+      "properties": {
+        "id": {
+          "type": "string",
+          "format": "uuid"
+        },
+        "displayName": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 200
+        },
+        "archivedAt": {
+          "type": [
+            "string",
+            "null"
+          ]
+        },
+        "identityUserId": {
+          "type": [
+            "string",
+            "null"
+          ],
+          "format": "uuid"
+        }
+      },
+      "required": [
+        "id",
+        "displayName",
+        "archivedAt",
+        "identityUserId"
+      ],
+      "additionalProperties": false
+    }
+  }
+}
