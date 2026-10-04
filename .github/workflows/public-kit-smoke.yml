@@ -1,0 +1,33 @@
+name: Public Kit Smoke
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+
+permissions:
+  contents: read
+
+jobs:
+  smoke:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 24
+          cache: npm
+      - name: Install public kit only
+        run: npm install --package-lock-only
+      - name: Install dependencies from lock
+        run: npm ci
+      - name: CLI boundary smoke
+        run: |
+          set +e
+          output=$(npm run kns -- 2>&1)
+          code=$?
+          set -e
+          echo "$output"
+          test "$code" -ne 0
+          echo "$output" | grep -F "Usage: kns keygen | pack | verify"
+          ! echo "$output" | grep -E "install|activate|rollback|MIGRATION_DATABASE_URL"
