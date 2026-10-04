@@ -1,5 +1,5 @@
 {
-  "kitVersion": "1.2.0",
+  "kitVersion": "1.2.1",
   "status": "THIRD-PARTY READY",
   "developerPackVersion": "1.0.0",
   "packageSpecVersion": "1.0.0",
@@ -34,5 +34,5 @@
       "offline verify"
     ]
   },
-  "note": "THIRD-PARTY READY means the public kit is sufficient to build and statically verify a module. Production trust, platform-dependent validation, installation, enablement and permission grants remain operator-controlled."
+  "note": "THIRD-PARTY READY means the public kit is sufficient to build and statically verify a module using only published contracts. Missing callable capability contracts remain explicit blockers; production trust, platform-dependent validation, installation, enablement and permission grants remain operator-controlled."
 }

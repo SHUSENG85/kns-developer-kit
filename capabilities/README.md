@@ -18,7 +18,7 @@ A `contractReference` identifies the owning KNS API surface. It is not permissio
 
 If the required canonical capability is absent, do not create a local copy of canonical data, query another domain's database, infer an API from legacy code, or invent a capability.
 
-Create a request that validates against `../schemas/capability-request.schema.json`. The request records the real workflow need, expected canonical owner, minimum information, existing capabilities considered, and why they are insufficient.
+Create a request that validates against `../contracts/capability-request.schema.json`. The request records the real workflow need, expected canonical owner, minimum information, existing capabilities considered, and why they are insufficient.
 
 This request is an architecture/governance input for the KNS owner. It does not reserve a capability ID and does not imply approval.
 
@@ -30,7 +30,7 @@ A relief module can discover `master.staff-directory@1.0.0` in the catalog. If i
 
 - `catalog.json` — generated from capabilities actually provided by reviewed KNS module manifests.
 - `master.staff-directory.v1.json` — published callable contract for `master.staff-directory@1.0.0`, including list/detail request and response shapes.
-- `../schemas/capability-catalog.schema.json` — catalog schema.
-- `../schemas/capability-request.schema.json` — missing-capability request schema.
+- `../contracts/capability-catalog.schema.json` — catalog schema.
+- `../contracts/capability-request.schema.json` — missing-capability request schema.
 
 The private KNS repository remains the implementation authority; this public directory is the reviewed third-party distribution surface.
