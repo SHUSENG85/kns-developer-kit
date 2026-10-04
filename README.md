@@ -35,6 +35,11 @@ Final delivery must include a valid signed .knsmod package and the required veri
 - [KNS Module Developer Pack v1](./KNS-MODULE-DEVELOPER-PACK.md)
 - [Canonical Module Development Guide](./docs/module-guide.md)
 - [KNS Module Package v1 specification](./docs/kns-module-package-v1.md)
+- [Generated module manifest schema](./contracts/module-v2.schema.json)
+- [Generated database access schema](./contracts/database-access.schema.json)
+- [Generated package manifest schema](./contracts/package-manifest.schema.json)
+- [Generated signature schema](./contracts/signature.schema.json)
+- [Generated release evidence schema](./contracts/release-evidence.schema.json)
 - [Changelog](./CHANGELOG.md)
 
 ## Security and ownership boundary
@@ -49,4 +54,4 @@ If a required KNS contract or capability cannot be verified from the published d
 
 **Developer Pack v1.0.0 — RELEASED**
 
-The next publication phase will add reviewed machine-readable contracts, SDK/server-kit integration surfaces, shared UI references and a safe example module. Until those are published here, their absence must be treated as a missing developer dependency rather than guessed from documentation.
+Machine-readable package/module schemas are now generated from the executable private KNS contracts and mirrored here. Reviewed SDK/server-kit integration surfaces, shared UI references and a safe example module remain later publication phases. Until those surfaces are published here, treat them as unavailable rather than guessing from internal behavior.
