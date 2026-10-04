@@ -34,7 +34,7 @@
     "frontend": "frontend",
     "apiImage": {
       "path": "api/image.oci.tar",
-      "digest": "sha256:0000000000000000000000000000000000000000000000000000000000000000"
+      "manifestDigest": "sha256:0000000000000000000000000000000000000000000000000000000000000000"
     },
     "openapi": "contracts/openapi.json",
     "migrations": [],
