@@ -1,0 +1,217 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://smkkn.top/developer-contract/v1/module-v2.schema.json",
+  "additionalProperties": false,
+  "type": "object",
+  "required": [
+    "id",
+    "name",
+    "version",
+    "owner",
+    "frontendBasePath",
+    "apiBasePath",
+    "permissions",
+    "ownedSchemas",
+    "eventsProduced",
+    "eventsConsumed",
+    "healthPath",
+    "rollback",
+    "requiredPlatformContract",
+    "providesCapabilities",
+    "requiredCapabilities",
+    "optionalCapabilities"
+  ],
+  "properties": {
+    "id": {
+      "pattern": "^[a-z][a-z0-9-]{1,39}$",
+      "type": "string"
+    },
+    "name": {
+      "minLength": 1,
+      "maxLength": 200,
+      "type": "string"
+    },
+    "version": {
+      "pattern": "^\\d+\\.\\d+\\.\\d+(?:-[a-zA-Z0-9.-]+)?$",
+      "type": "string"
+    },
+    "owner": {
+      "minLength": 1,
+      "maxLength": 200,
+      "type": "string"
+    },
+    "frontendBasePath": {
+      "pattern": "^/[a-z][a-z0-9-]*/$",
+      "type": "string"
+    },
+    "apiBasePath": {
+      "pattern": "^/api/v1/[a-z][a-z0-9-]*$",
+      "type": "string"
+    },
+    "permissions": {
+      "minItems": 1,
+      "uniqueItems": true,
+      "type": "array",
+      "items": {
+        "minLength": 1,
+        "maxLength": 100,
+        "type": "string"
+      }
+    },
+    "ownedSchemas": {
+      "minItems": 1,
+      "type": "array",
+      "items": {
+        "pattern": "^[a-z][a-z0-9_]*$",
+        "type": "string"
+      }
+    },
+    "eventsProduced": {
+      "type": "array",
+      "items": {
+        "pattern": "^[a-z]+(?:\\.[a-z]+)+\\.v[1-9][0-9]*$",
+        "type": "string"
+      }
+    },
+    "eventsConsumed": {
+      "type": "array",
+      "items": {
+        "pattern": "^[a-z]+(?:\\.[a-z]+)+\\.v[1-9][0-9]*$",
+        "type": "string"
+      }
+    },
+    "healthPath": {
+      "pattern": "^/api/v1/[a-z][a-z0-9-]*/health$",
+      "type": "string"
+    },
+    "rollback": {
+      "const": "previous-release",
+      "type": "string"
+    },
+    "requiredPlatformContract": {
+      "const": "2",
+      "type": "string"
+    },
+    "providesCapabilities": {
+      "type": "array",
+      "items": {
+        "additionalProperties": false,
+        "type": "object",
+        "required": [
+          "id",
+          "version",
+          "ownerDomain",
+          "description",
+          "sensitivity",
+          "contractReference",
+          "permissions",
+          "relatedEvents"
+        ],
+        "properties": {
+          "id": {
+            "pattern": "^[a-z][a-z0-9-]*(?:\\.[a-z][a-z0-9-]*)+$",
+            "type": "string"
+          },
+          "version": {
+            "pattern": "^[1-9][0-9]*\\.[0-9]+\\.[0-9]+$",
+            "type": "string"
+          },
+          "ownerDomain": {
+            "minLength": 1,
+            "maxLength": 80,
+            "type": "string"
+          },
+          "description": {
+            "minLength": 1,
+            "maxLength": 500,
+            "type": "string"
+          },
+          "sensitivity": {
+            "anyOf": [
+              {
+                "const": "PUBLIC",
+                "type": "string"
+              },
+              {
+                "const": "INTERNAL",
+                "type": "string"
+              },
+              {
+                "const": "SENSITIVE",
+                "type": "string"
+              },
+              {
+                "const": "HIGHLY_SENSITIVE",
+                "type": "string"
+              }
+            ]
+          },
+          "contractReference": {
+            "pattern": "^/api/v1/[a-z][a-z0-9-]*/",
+            "type": "string"
+          },
+          "permissions": {
+            "minItems": 1,
+            "uniqueItems": true,
+            "type": "array",
+            "items": {
+              "minLength": 1,
+              "maxLength": 100,
+              "type": "string"
+            }
+          },
+          "relatedEvents": {
+            "uniqueItems": true,
+            "type": "array",
+            "items": {
+              "pattern": "^[a-z]+(?:\\.[a-z]+)+\\.v[1-9][0-9]*$",
+              "type": "string"
+            }
+          }
+        }
+      }
+    },
+    "requiredCapabilities": {
+      "type": "array",
+      "items": {
+        "additionalProperties": false,
+        "type": "object",
+        "required": [
+          "id",
+          "versionRange"
+        ],
+        "properties": {
+          "id": {
+            "pattern": "^[a-z][a-z0-9-]*(?:\\.[a-z][a-z0-9-]*)+$",
+            "type": "string"
+          },
+          "versionRange": {
+            "pattern": "^\\^[1-9][0-9]*\\.[0-9]+\\.[0-9]+$",
+            "type": "string"
+          }
+        }
+      }
+    },
+    "optionalCapabilities": {
+      "type": "array",
+      "items": {
+        "additionalProperties": false,
+        "type": "object",
+        "required": [
+          "id",
+          "versionRange"
+        ],
+        "properties": {
+          "id": {
+            "pattern": "^[a-z][a-z0-9-]*(?:\\.[a-z][a-z0-9-]*)+$",
+            "type": "string"
+          },
+          "versionRange": {
+            "pattern": "^\\^[1-9][0-9]*\\.[0-9]+\\.[0-9]+$",
+            "type": "string"
+          }
+        }
+      }
+    }
+  }
+}
