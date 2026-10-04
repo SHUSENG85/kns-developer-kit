@@ -1,0 +1,105 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://smkkn.top/developer-contract/v1/capability-request.schema.json",
+  "additionalProperties": false,
+  "type": "object",
+  "required": [
+    "requestVersion",
+    "consumerModuleId",
+    "requestedCapability",
+    "workflowNeed",
+    "expectedCanonicalOwner",
+    "minimumInformation",
+    "existingCapabilitiesConsidered",
+    "whyExistingCapabilitiesAreInsufficient",
+    "prohibitedWorkaroundsConfirmed"
+  ],
+  "properties": {
+    "requestVersion": {
+      "const": "1.0.0",
+      "type": "string"
+    },
+    "consumerModuleId": {
+      "pattern": "^[a-z][a-z0-9-]{1,39}$",
+      "type": "string"
+    },
+    "requestedCapability": {
+      "minLength": 3,
+      "maxLength": 120,
+      "type": "string"
+    },
+    "workflowNeed": {
+      "minLength": 1,
+      "maxLength": 2000,
+      "type": "string"
+    },
+    "expectedCanonicalOwner": {
+      "minLength": 1,
+      "maxLength": 120,
+      "type": "string"
+    },
+    "minimumInformation": {
+      "minItems": 1,
+      "uniqueItems": true,
+      "type": "array",
+      "items": {
+        "minLength": 1,
+        "maxLength": 120,
+        "type": "string"
+      }
+    },
+    "existingCapabilitiesConsidered": {
+      "uniqueItems": true,
+      "type": "array",
+      "items": {
+        "additionalProperties": false,
+        "type": "object",
+        "required": [
+          "id",
+          "versionRange"
+        ],
+        "properties": {
+          "id": {
+            "pattern": "^[a-z][a-z0-9-]*(?:\\.[a-z][a-z0-9-]*)+$",
+            "type": "string"
+          },
+          "versionRange": {
+            "pattern": "^\\^[1-9][0-9]*\\.[0-9]+\\.[0-9]+$",
+            "type": "string"
+          }
+        }
+      }
+    },
+    "whyExistingCapabilitiesAreInsufficient": {
+      "minLength": 1,
+      "maxLength": 2000,
+      "type": "string"
+    },
+    "prohibitedWorkaroundsConfirmed": {
+      "minItems": 4,
+      "maxItems": 4,
+      "uniqueItems": true,
+      "type": "array",
+      "items": {
+        "anyOf": [
+          {
+            "const": "NO_CANONICAL_DATA_COPY",
+            "type": "string"
+          },
+          {
+            "const": "NO_CROSS_DOMAIN_SQL",
+            "type": "string"
+          },
+          {
+            "const": "NO_INVENTED_CAPABILITY",
+            "type": "string"
+          },
+          {
+            "const": "NO_LEGACY_AUTHORITY",
+            "type": "string"
+          }
+        ]
+      }
+    }
+  }
+}
