@@ -59,7 +59,7 @@
       }
     },
     "ownedSchemas": {
-      "minItems": 1,
+      "uniqueItems": true,
       "type": "array",
       "items": {
         "pattern": "^[a-z][a-z0-9_]*$",

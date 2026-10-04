@@ -146,6 +146,18 @@
       "relatedEvents": []
     },
     {
+      "id": "master.timetable",
+      "version": "1.0.0",
+      "ownerDomain": "academic",
+      "description": "Immutable effective-date recurring lesson slots and positively proven teacher availability",
+      "sensitivity": "SENSITIVE",
+      "contractReference": "/api/v1/master/academic/timetable/availability",
+      "permissions": [
+        "academic.timetable.read"
+      ],
+      "relatedEvents": []
+    },
+    {
       "id": "master.unit-memberships",
       "version": "1.0.0",
       "ownerDomain": "organisation",

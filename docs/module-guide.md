@@ -7,12 +7,25 @@ rolling back and handing off an independently developed KNS module.
 
 It does not replace higher architecture authority. When rules conflict, use this order:
 
-1. KNS Master Blueprint v4.2;
+1. KNS Master Blueprint v4.3;
 2. current architecture documentation;
 3. this module guide;
 4. module-specific approved design documents.
 
-Blueprint v4.1 remains a historical implementation-validated baseline only.
+Blueprint v4.2 is the predecessor; v4.1 remains a historical implementation-validated baseline.
+
+Blueprint v4.3 governs data capability readiness. The public Developer Kit distributes reviewed
+catalog entries and callable contracts derived from accepted provider contracts. Consumers must
+prove both the capability ID/version and the operation they need before implementation, declare
+the dependency, and use the owning domain API for canonical data. Source workbooks, legacy data,
+consumer caches and another domain's database cannot become canonical authority.
+
+Core grants and enforces permissions separately from capability discovery and installation.
+Provider health, data proof and authorization are separate checks. Fail closed on missing
+contracts, unproven data, ambiguity or conflict; never infer availability from absent lessons.
+The private Data Capability Readiness Registry supports owner diagnosis and planning; it is not
+a runtime consumer API. Public contract availability proves distribution, not production
+deployment, populated canonical data or runtime permission grants.
 
 A KNS module is accepted only when it has a clear boundary, declared ownership, tested contracts,
 versioned artifacts, health checks, rollback, production evidence and a clean handoff.

@@ -1,0 +1,2368 @@
+{
+  "contractVersion": "1.0.0",
+  "capability": {
+    "id": "master.timetable",
+    "version": "1.0.0"
+  },
+  "ownerDomain": "academic",
+  "permission": "academic.timetable.read",
+  "sensitivity": "SENSITIVE",
+  "contractReference": "/api/v1/master/academic/timetable/availability",
+  "relatedEvents": [],
+  "operations": [
+    {
+      "operationId": "readMasterStaffTimetableSlots",
+      "method": "GET",
+      "path": "/api/v1/master/academic/timetable/staff/{staffId}/slots",
+      "permission": "academic.timetable.read",
+      "parameters": [
+        {
+          "schema": {
+            "pattern": "^\\d{4}-\\d{2}-\\d{2}$",
+            "type": "string"
+          },
+          "in": "query",
+          "name": "fromDate",
+          "required": true
+        },
+        {
+          "schema": {
+            "pattern": "^\\d{4}-\\d{2}-\\d{2}$",
+            "type": "string"
+          },
+          "in": "query",
+          "name": "toDate",
+          "required": true
+        },
+        {
+          "schema": {
+            "format": "uuid",
+            "type": "string"
+          },
+          "in": "path",
+          "name": "staffId",
+          "required": true
+        }
+      ],
+      "responses": {
+        "200": {
+          "description": "Default Response",
+          "content": {
+            "application/json": {
+              "schema": {
+                "additionalProperties": false,
+                "type": "object",
+                "required": [
+                  "data"
+                ],
+                "properties": {
+                  "data": {
+                    "type": "object",
+                    "required": [
+                      "state",
+                      "publications",
+                      "dates",
+                      "items"
+                    ],
+                    "properties": {
+                      "state": {
+                        "anyOf": [
+                          {
+                            "type": "string",
+                            "enum": [
+                              "PROVEN"
+                            ]
+                          },
+                          {
+                            "type": "string",
+                            "enum": [
+                              "NO_SCHEDULE"
+                            ]
+                          },
+                          {
+                            "type": "string",
+                            "enum": [
+                              "UNPROVEN"
+                            ]
+                          },
+                          {
+                            "type": "string",
+                            "enum": [
+                              "CONFLICT"
+                            ]
+                          }
+                        ]
+                      },
+                      "publications": {
+                        "type": "array",
+                        "items": {
+                          "type": "object",
+                          "required": [
+                            "id",
+                            "academicYearId",
+                            "sourceVersionLabel",
+                            "effectiveFrom"
+                          ],
+                          "properties": {
+                            "id": {
+                              "format": "uuid",
+                              "type": "string"
+                            },
+                            "academicYearId": {
+                              "format": "uuid",
+                              "type": "string"
+                            },
+                            "sourceVersionLabel": {
+                              "minLength": 1,
+                              "maxLength": 40,
+                              "type": "string"
+                            },
+                            "effectiveFrom": {
+                              "minLength": 1,
+                              "maxLength": 10,
+                              "type": "string"
+                            }
+                          }
+                        }
+                      },
+                      "dates": {
+                        "type": "array",
+                        "items": {
+                          "type": "object",
+                          "required": [
+                            "date",
+                            "state",
+                            "publication"
+                          ],
+                          "properties": {
+                            "date": {
+                              "minLength": 1,
+                              "maxLength": 10,
+                              "type": "string"
+                            },
+                            "state": {
+                              "anyOf": [
+                                {
+                                  "type": "string",
+                                  "enum": [
+                                    "PROVEN"
+                                  ]
+                                },
+                                {
+                                  "type": "string",
+                                  "enum": [
+                                    "NO_SCHEDULE"
+                                  ]
+                                },
+                                {
+                                  "type": "string",
+                                  "enum": [
+                                    "UNPROVEN"
+                                  ]
+                                },
+                                {
+                                  "type": "string",
+                                  "enum": [
+                                    "CONFLICT"
+                                  ]
+                                }
+                              ]
+                            },
+                            "publication": {
+                              "type": "object",
+                              "required": [
+                                "id",
+                                "academicYearId",
+                                "sourceVersionLabel",
+                                "effectiveFrom"
+                              ],
+                              "properties": {
+                                "id": {
+                                  "format": "uuid",
+                                  "type": "string"
+                                },
+                                "academicYearId": {
+                                  "format": "uuid",
+                                  "type": "string"
+                                },
+                                "sourceVersionLabel": {
+                                  "minLength": 1,
+                                  "maxLength": 40,
+                                  "type": "string"
+                                },
+                                "effectiveFrom": {
+                                  "minLength": 1,
+                                  "maxLength": 10,
+                                  "type": "string"
+                                }
+                              },
+                              "nullable": true
+                            }
+                          }
+                        }
+                      },
+                      "items": {
+                        "type": "array",
+                        "items": {
+                          "type": "object",
+                          "required": [
+                            "slotId",
+                            "publicationId",
+                            "date",
+                            "weekday",
+                            "periodIndex",
+                            "staffId",
+                            "classId",
+                            "classLabel",
+                            "subjectId",
+                            "subjectCode",
+                            "subjectLabel"
+                          ],
+                          "properties": {
+                            "slotId": {
+                              "format": "uuid",
+                              "type": "string"
+                            },
+                            "publicationId": {
+                              "format": "uuid",
+                              "type": "string"
+                            },
+                            "date": {
+                              "minLength": 1,
+                              "maxLength": 10,
+                              "type": "string"
+                            },
+                            "weekday": {
+                              "minimum": 1,
+                              "maximum": 7,
+                              "type": "integer"
+                            },
+                            "periodIndex": {
+                              "minimum": 0,
+                              "maximum": 14,
+                              "type": "integer"
+                            },
+                            "staffId": {
+                              "format": "uuid",
+                              "type": "string"
+                            },
+                            "classId": {
+                              "format": "uuid",
+                              "type": "string"
+                            },
+                            "classLabel": {
+                              "minLength": 1,
+                              "maxLength": 120,
+                              "type": "string"
+                            },
+                            "subjectId": {
+                              "format": "uuid",
+                              "type": "string"
+                            },
+                            "subjectCode": {
+                              "minLength": 1,
+                              "maxLength": 40,
+                              "type": "string"
+                            },
+                            "subjectLabel": {
+                              "minLength": 1,
+                              "maxLength": 200,
+                              "type": "string"
+                            }
+                          }
+                        }
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          }
+        },
+        "201": {
+          "description": "Default Response",
+          "content": {
+            "application/json": {
+              "schema": {
+                "additionalProperties": false,
+                "type": "object",
+                "required": [
+                  "data"
+                ],
+                "properties": {
+                  "data": {
+                    "type": "object",
+                    "required": [
+                      "state",
+                      "publications",
+                      "dates",
+                      "items"
+                    ],
+                    "properties": {
+                      "state": {
+                        "anyOf": [
+                          {
+                            "type": "string",
+                            "enum": [
+                              "PROVEN"
+                            ]
+                          },
+                          {
+                            "type": "string",
+                            "enum": [
+                              "NO_SCHEDULE"
+                            ]
+                          },
+                          {
+                            "type": "string",
+                            "enum": [
+                              "UNPROVEN"
+                            ]
+                          },
+                          {
+                            "type": "string",
+                            "enum": [
+                              "CONFLICT"
+                            ]
+                          }
+                        ]
+                      },
+                      "publications": {
+                        "type": "array",
+                        "items": {
+                          "type": "object",
+                          "required": [
+                            "id",
+                            "academicYearId",
+                            "sourceVersionLabel",
+                            "effectiveFrom"
+                          ],
+                          "properties": {
+                            "id": {
+                              "format": "uuid",
+                              "type": "string"
+                            },
+                            "academicYearId": {
+                              "format": "uuid",
+                              "type": "string"
+                            },
+                            "sourceVersionLabel": {
+                              "minLength": 1,
+                              "maxLength": 40,
+                              "type": "string"
+                            },
+                            "effectiveFrom": {
+                              "minLength": 1,
+                              "maxLength": 10,
+                              "type": "string"
+                            }
+                          }
+                        }
+                      },
+                      "dates": {
+                        "type": "array",
+                        "items": {
+                          "type": "object",
+                          "required": [
+                            "date",
+                            "state",
+                            "publication"
+                          ],
+                          "properties": {
+                            "date": {
+                              "minLength": 1,
+                              "maxLength": 10,
+                              "type": "string"
+                            },
+                            "state": {
+                              "anyOf": [
+                                {
+                                  "type": "string",
+                                  "enum": [
+                                    "PROVEN"
+                                  ]
+                                },
+                                {
+                                  "type": "string",
+                                  "enum": [
+                                    "NO_SCHEDULE"
+                                  ]
+                                },
+                                {
+                                  "type": "string",
+                                  "enum": [
+                                    "UNPROVEN"
+                                  ]
+                                },
+                                {
+                                  "type": "string",
+                                  "enum": [
+                                    "CONFLICT"
+                                  ]
+                                }
+                              ]
+                            },
+                            "publication": {
+                              "type": "object",
+                              "required": [
+                                "id",
+                                "academicYearId",
+                                "sourceVersionLabel",
+                                "effectiveFrom"
+                              ],
+                              "properties": {
+                                "id": {
+                                  "format": "uuid",
+                                  "type": "string"
+                                },
+                                "academicYearId": {
+                                  "format": "uuid",
+                                  "type": "string"
+                                },
+                                "sourceVersionLabel": {
+                                  "minLength": 1,
+                                  "maxLength": 40,
+                                  "type": "string"
+                                },
+                                "effectiveFrom": {
+                                  "minLength": 1,
+                                  "maxLength": 10,
+                                  "type": "string"
+                                }
+                              },
+                              "nullable": true
+                            }
+                          }
+                        }
+                      },
+                      "items": {
+                        "type": "array",
+                        "items": {
+                          "type": "object",
+                          "required": [
+                            "slotId",
+                            "publicationId",
+                            "date",
+                            "weekday",
+                            "periodIndex",
+                            "staffId",
+                            "classId",
+                            "classLabel",
+                            "subjectId",
+                            "subjectCode",
+                            "subjectLabel"
+                          ],
+                          "properties": {
+                            "slotId": {
+                              "format": "uuid",
+                              "type": "string"
+                            },
+                            "publicationId": {
+                              "format": "uuid",
+                              "type": "string"
+                            },
+                            "date": {
+                              "minLength": 1,
+                              "maxLength": 10,
+                              "type": "string"
+                            },
+                            "weekday": {
+                              "minimum": 1,
+                              "maximum": 7,
+                              "type": "integer"
+                            },
+                            "periodIndex": {
+                              "minimum": 0,
+                              "maximum": 14,
+                              "type": "integer"
+                            },
+                            "staffId": {
+                              "format": "uuid",
+                              "type": "string"
+                            },
+                            "classId": {
+                              "format": "uuid",
+                              "type": "string"
+                            },
+                            "classLabel": {
+                              "minLength": 1,
+                              "maxLength": 120,
+                              "type": "string"
+                            },
+                            "subjectId": {
+                              "format": "uuid",
+                              "type": "string"
+                            },
+                            "subjectCode": {
+                              "minLength": 1,
+                              "maxLength": 40,
+                              "type": "string"
+                            },
+                            "subjectLabel": {
+                              "minLength": 1,
+                              "maxLength": 200,
+                              "type": "string"
+                            }
+                          }
+                        }
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          }
+        },
+        "400": {
+          "description": "Default Response",
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "required": [
+                  "error"
+                ],
+                "properties": {
+                  "error": {
+                    "type": "object",
+                    "required": [
+                      "code",
+                      "message",
+                      "requestId"
+                    ],
+                    "properties": {
+                      "code": {
+                        "minLength": 1,
+                        "maxLength": 200,
+                        "type": "string"
+                      },
+                      "message": {
+                        "minLength": 1,
+                        "maxLength": 500,
+                        "type": "string"
+                      },
+                      "requestId": {
+                        "minLength": 1,
+                        "maxLength": 100,
+                        "type": "string"
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          }
+        },
+        "401": {
+          "description": "Default Response",
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "required": [
+                  "error"
+                ],
+                "properties": {
+                  "error": {
+                    "type": "object",
+                    "required": [
+                      "code",
+                      "message",
+                      "requestId"
+                    ],
+                    "properties": {
+                      "code": {
+                        "minLength": 1,
+                        "maxLength": 200,
+                        "type": "string"
+                      },
+                      "message": {
+                        "minLength": 1,
+                        "maxLength": 500,
+                        "type": "string"
+                      },
+                      "requestId": {
+                        "minLength": 1,
+                        "maxLength": 100,
+                        "type": "string"
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          }
+        },
+        "403": {
+          "description": "Default Response",
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "required": [
+                  "error"
+                ],
+                "properties": {
+                  "error": {
+                    "type": "object",
+                    "required": [
+                      "code",
+                      "message",
+                      "requestId"
+                    ],
+                    "properties": {
+                      "code": {
+                        "minLength": 1,
+                        "maxLength": 200,
+                        "type": "string"
+                      },
+                      "message": {
+                        "minLength": 1,
+                        "maxLength": 500,
+                        "type": "string"
+                      },
+                      "requestId": {
+                        "minLength": 1,
+                        "maxLength": 100,
+                        "type": "string"
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          }
+        },
+        "404": {
+          "description": "Default Response",
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "required": [
+                  "error"
+                ],
+                "properties": {
+                  "error": {
+                    "type": "object",
+                    "required": [
+                      "code",
+                      "message",
+                      "requestId"
+                    ],
+                    "properties": {
+                      "code": {
+                        "minLength": 1,
+                        "maxLength": 200,
+                        "type": "string"
+                      },
+                      "message": {
+                        "minLength": 1,
+                        "maxLength": 500,
+                        "type": "string"
+                      },
+                      "requestId": {
+                        "minLength": 1,
+                        "maxLength": 100,
+                        "type": "string"
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          }
+        },
+        "409": {
+          "description": "Default Response",
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "required": [
+                  "error"
+                ],
+                "properties": {
+                  "error": {
+                    "type": "object",
+                    "required": [
+                      "code",
+                      "message",
+                      "requestId"
+                    ],
+                    "properties": {
+                      "code": {
+                        "minLength": 1,
+                        "maxLength": 200,
+                        "type": "string"
+                      },
+                      "message": {
+                        "minLength": 1,
+                        "maxLength": 500,
+                        "type": "string"
+                      },
+                      "requestId": {
+                        "minLength": 1,
+                        "maxLength": 100,
+                        "type": "string"
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          }
+        },
+        "413": {
+          "description": "Default Response",
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "required": [
+                  "error"
+                ],
+                "properties": {
+                  "error": {
+                    "type": "object",
+                    "required": [
+                      "code",
+                      "message",
+                      "requestId"
+                    ],
+                    "properties": {
+                      "code": {
+                        "minLength": 1,
+                        "maxLength": 200,
+                        "type": "string"
+                      },
+                      "message": {
+                        "minLength": 1,
+                        "maxLength": 500,
+                        "type": "string"
+                      },
+                      "requestId": {
+                        "minLength": 1,
+                        "maxLength": 100,
+                        "type": "string"
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          }
+        },
+        "429": {
+          "description": "Default Response",
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "required": [
+                  "error"
+                ],
+                "properties": {
+                  "error": {
+                    "type": "object",
+                    "required": [
+                      "code",
+                      "message",
+                      "requestId"
+                    ],
+                    "properties": {
+                      "code": {
+                        "minLength": 1,
+                        "maxLength": 200,
+                        "type": "string"
+                      },
+                      "message": {
+                        "minLength": 1,
+                        "maxLength": 500,
+                        "type": "string"
+                      },
+                      "requestId": {
+                        "minLength": 1,
+                        "maxLength": 100,
+                        "type": "string"
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          }
+        },
+        "500": {
+          "description": "Default Response",
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "required": [
+                  "error"
+                ],
+                "properties": {
+                  "error": {
+                    "type": "object",
+                    "required": [
+                      "code",
+                      "message",
+                      "requestId"
+                    ],
+                    "properties": {
+                      "code": {
+                        "minLength": 1,
+                        "maxLength": 200,
+                        "type": "string"
+                      },
+                      "message": {
+                        "minLength": 1,
+                        "maxLength": 500,
+                        "type": "string"
+                      },
+                      "requestId": {
+                        "minLength": 1,
+                        "maxLength": 100,
+                        "type": "string"
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          }
+        },
+        "503": {
+          "description": "Default Response",
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "required": [
+                  "error"
+                ],
+                "properties": {
+                  "error": {
+                    "type": "object",
+                    "required": [
+                      "code",
+                      "message",
+                      "requestId"
+                    ],
+                    "properties": {
+                      "code": {
+                        "minLength": 1,
+                        "maxLength": 200,
+                        "type": "string"
+                      },
+                      "message": {
+                        "minLength": 1,
+                        "maxLength": 500,
+                        "type": "string"
+                      },
+                      "requestId": {
+                        "minLength": 1,
+                        "maxLength": 100,
+                        "type": "string"
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    {
+      "operationId": "readMasterClassTimetableSlots",
+      "method": "GET",
+      "path": "/api/v1/master/academic/timetable/classes/{classId}/slots",
+      "permission": "academic.timetable.read",
+      "parameters": [
+        {
+          "schema": {
+            "pattern": "^\\d{4}-\\d{2}-\\d{2}$",
+            "type": "string"
+          },
+          "in": "query",
+          "name": "fromDate",
+          "required": true
+        },
+        {
+          "schema": {
+            "pattern": "^\\d{4}-\\d{2}-\\d{2}$",
+            "type": "string"
+          },
+          "in": "query",
+          "name": "toDate",
+          "required": true
+        },
+        {
+          "schema": {
+            "format": "uuid",
+            "type": "string"
+          },
+          "in": "path",
+          "name": "classId",
+          "required": true
+        }
+      ],
+      "responses": {
+        "200": {
+          "description": "Default Response",
+          "content": {
+            "application/json": {
+              "schema": {
+                "additionalProperties": false,
+                "type": "object",
+                "required": [
+                  "data"
+                ],
+                "properties": {
+                  "data": {
+                    "type": "object",
+                    "required": [
+                      "state",
+                      "publications",
+                      "dates",
+                      "items"
+                    ],
+                    "properties": {
+                      "state": {
+                        "anyOf": [
+                          {
+                            "type": "string",
+                            "enum": [
+                              "PROVEN"
+                            ]
+                          },
+                          {
+                            "type": "string",
+                            "enum": [
+                              "NO_SCHEDULE"
+                            ]
+                          },
+                          {
+                            "type": "string",
+                            "enum": [
+                              "UNPROVEN"
+                            ]
+                          },
+                          {
+                            "type": "string",
+                            "enum": [
+                              "CONFLICT"
+                            ]
+                          }
+                        ]
+                      },
+                      "publications": {
+                        "type": "array",
+                        "items": {
+                          "type": "object",
+                          "required": [
+                            "id",
+                            "academicYearId",
+                            "sourceVersionLabel",
+                            "effectiveFrom"
+                          ],
+                          "properties": {
+                            "id": {
+                              "format": "uuid",
+                              "type": "string"
+                            },
+                            "academicYearId": {
+                              "format": "uuid",
+                              "type": "string"
+                            },
+                            "sourceVersionLabel": {
+                              "minLength": 1,
+                              "maxLength": 40,
+                              "type": "string"
+                            },
+                            "effectiveFrom": {
+                              "minLength": 1,
+                              "maxLength": 10,
+                              "type": "string"
+                            }
+                          }
+                        }
+                      },
+                      "dates": {
+                        "type": "array",
+                        "items": {
+                          "type": "object",
+                          "required": [
+                            "date",
+                            "state",
+                            "publication"
+                          ],
+                          "properties": {
+                            "date": {
+                              "minLength": 1,
+                              "maxLength": 10,
+                              "type": "string"
+                            },
+                            "state": {
+                              "anyOf": [
+                                {
+                                  "type": "string",
+                                  "enum": [
+                                    "PROVEN"
+                                  ]
+                                },
+                                {
+                                  "type": "string",
+                                  "enum": [
+                                    "NO_SCHEDULE"
+                                  ]
+                                },
+                                {
+                                  "type": "string",
+                                  "enum": [
+                                    "UNPROVEN"
+                                  ]
+                                },
+                                {
+                                  "type": "string",
+                                  "enum": [
+                                    "CONFLICT"
+                                  ]
+                                }
+                              ]
+                            },
+                            "publication": {
+                              "type": "object",
+                              "required": [
+                                "id",
+                                "academicYearId",
+                                "sourceVersionLabel",
+                                "effectiveFrom"
+                              ],
+                              "properties": {
+                                "id": {
+                                  "format": "uuid",
+                                  "type": "string"
+                                },
+                                "academicYearId": {
+                                  "format": "uuid",
+                                  "type": "string"
+                                },
+                                "sourceVersionLabel": {
+                                  "minLength": 1,
+                                  "maxLength": 40,
+                                  "type": "string"
+                                },
+                                "effectiveFrom": {
+                                  "minLength": 1,
+                                  "maxLength": 10,
+                                  "type": "string"
+                                }
+                              },
+                              "nullable": true
+                            }
+                          }
+                        }
+                      },
+                      "items": {
+                        "type": "array",
+                        "items": {
+                          "type": "object",
+                          "required": [
+                            "slotId",
+                            "publicationId",
+                            "date",
+                            "weekday",
+                            "periodIndex",
+                            "staffId",
+                            "classId",
+                            "classLabel",
+                            "subjectId",
+                            "subjectCode",
+                            "subjectLabel"
+                          ],
+                          "properties": {
+                            "slotId": {
+                              "format": "uuid",
+                              "type": "string"
+                            },
+                            "publicationId": {
+                              "format": "uuid",
+                              "type": "string"
+                            },
+                            "date": {
+                              "minLength": 1,
+                              "maxLength": 10,
+                              "type": "string"
+                            },
+                            "weekday": {
+                              "minimum": 1,
+                              "maximum": 7,
+                              "type": "integer"
+                            },
+                            "periodIndex": {
+                              "minimum": 0,
+                              "maximum": 14,
+                              "type": "integer"
+                            },
+                            "staffId": {
+                              "format": "uuid",
+                              "type": "string"
+                            },
+                            "classId": {
+                              "format": "uuid",
+                              "type": "string"
+                            },
+                            "classLabel": {
+                              "minLength": 1,
+                              "maxLength": 120,
+                              "type": "string"
+                            },
+                            "subjectId": {
+                              "format": "uuid",
+                              "type": "string"
+                            },
+                            "subjectCode": {
+                              "minLength": 1,
+                              "maxLength": 40,
+                              "type": "string"
+                            },
+                            "subjectLabel": {
+                              "minLength": 1,
+                              "maxLength": 200,
+                              "type": "string"
+                            }
+                          }
+                        }
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          }
+        },
+        "201": {
+          "description": "Default Response",
+          "content": {
+            "application/json": {
+              "schema": {
+                "additionalProperties": false,
+                "type": "object",
+                "required": [
+                  "data"
+                ],
+                "properties": {
+                  "data": {
+                    "type": "object",
+                    "required": [
+                      "state",
+                      "publications",
+                      "dates",
+                      "items"
+                    ],
+                    "properties": {
+                      "state": {
+                        "anyOf": [
+                          {
+                            "type": "string",
+                            "enum": [
+                              "PROVEN"
+                            ]
+                          },
+                          {
+                            "type": "string",
+                            "enum": [
+                              "NO_SCHEDULE"
+                            ]
+                          },
+                          {
+                            "type": "string",
+                            "enum": [
+                              "UNPROVEN"
+                            ]
+                          },
+                          {
+                            "type": "string",
+                            "enum": [
+                              "CONFLICT"
+                            ]
+                          }
+                        ]
+                      },
+                      "publications": {
+                        "type": "array",
+                        "items": {
+                          "type": "object",
+                          "required": [
+                            "id",
+                            "academicYearId",
+                            "sourceVersionLabel",
+                            "effectiveFrom"
+                          ],
+                          "properties": {
+                            "id": {
+                              "format": "uuid",
+                              "type": "string"
+                            },
+                            "academicYearId": {
+                              "format": "uuid",
+                              "type": "string"
+                            },
+                            "sourceVersionLabel": {
+                              "minLength": 1,
+                              "maxLength": 40,
+                              "type": "string"
+                            },
+                            "effectiveFrom": {
+                              "minLength": 1,
+                              "maxLength": 10,
+                              "type": "string"
+                            }
+                          }
+                        }
+                      },
+                      "dates": {
+                        "type": "array",
+                        "items": {
+                          "type": "object",
+                          "required": [
+                            "date",
+                            "state",
+                            "publication"
+                          ],
+                          "properties": {
+                            "date": {
+                              "minLength": 1,
+                              "maxLength": 10,
+                              "type": "string"
+                            },
+                            "state": {
+                              "anyOf": [
+                                {
+                                  "type": "string",
+                                  "enum": [
+                                    "PROVEN"
+                                  ]
+                                },
+                                {
+                                  "type": "string",
+                                  "enum": [
+                                    "NO_SCHEDULE"
+                                  ]
+                                },
+                                {
+                                  "type": "string",
+                                  "enum": [
+                                    "UNPROVEN"
+                                  ]
+                                },
+                                {
+                                  "type": "string",
+                                  "enum": [
+                                    "CONFLICT"
+                                  ]
+                                }
+                              ]
+                            },
+                            "publication": {
+                              "type": "object",
+                              "required": [
+                                "id",
+                                "academicYearId",
+                                "sourceVersionLabel",
+                                "effectiveFrom"
+                              ],
+                              "properties": {
+                                "id": {
+                                  "format": "uuid",
+                                  "type": "string"
+                                },
+                                "academicYearId": {
+                                  "format": "uuid",
+                                  "type": "string"
+                                },
+                                "sourceVersionLabel": {
+                                  "minLength": 1,
+                                  "maxLength": 40,
+                                  "type": "string"
+                                },
+                                "effectiveFrom": {
+                                  "minLength": 1,
+                                  "maxLength": 10,
+                                  "type": "string"
+                                }
+                              },
+                              "nullable": true
+                            }
+                          }
+                        }
+                      },
+                      "items": {
+                        "type": "array",
+                        "items": {
+                          "type": "object",
+                          "required": [
+                            "slotId",
+                            "publicationId",
+                            "date",
+                            "weekday",
+                            "periodIndex",
+                            "staffId",
+                            "classId",
+                            "classLabel",
+                            "subjectId",
+                            "subjectCode",
+                            "subjectLabel"
+                          ],
+                          "properties": {
+                            "slotId": {
+                              "format": "uuid",
+                              "type": "string"
+                            },
+                            "publicationId": {
+                              "format": "uuid",
+                              "type": "string"
+                            },
+                            "date": {
+                              "minLength": 1,
+                              "maxLength": 10,
+                              "type": "string"
+                            },
+                            "weekday": {
+                              "minimum": 1,
+                              "maximum": 7,
+                              "type": "integer"
+                            },
+                            "periodIndex": {
+                              "minimum": 0,
+                              "maximum": 14,
+                              "type": "integer"
+                            },
+                            "staffId": {
+                              "format": "uuid",
+                              "type": "string"
+                            },
+                            "classId": {
+                              "format": "uuid",
+                              "type": "string"
+                            },
+                            "classLabel": {
+                              "minLength": 1,
+                              "maxLength": 120,
+                              "type": "string"
+                            },
+                            "subjectId": {
+                              "format": "uuid",
+                              "type": "string"
+                            },
+                            "subjectCode": {
+                              "minLength": 1,
+                              "maxLength": 40,
+                              "type": "string"
+                            },
+                            "subjectLabel": {
+                              "minLength": 1,
+                              "maxLength": 200,
+                              "type": "string"
+                            }
+                          }
+                        }
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          }
+        },
+        "400": {
+          "description": "Default Response",
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "required": [
+                  "error"
+                ],
+                "properties": {
+                  "error": {
+                    "type": "object",
+                    "required": [
+                      "code",
+                      "message",
+                      "requestId"
+                    ],
+                    "properties": {
+                      "code": {
+                        "minLength": 1,
+                        "maxLength": 200,
+                        "type": "string"
+                      },
+                      "message": {
+                        "minLength": 1,
+                        "maxLength": 500,
+                        "type": "string"
+                      },
+                      "requestId": {
+                        "minLength": 1,
+                        "maxLength": 100,
+                        "type": "string"
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          }
+        },
+        "401": {
+          "description": "Default Response",
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "required": [
+                  "error"
+                ],
+                "properties": {
+                  "error": {
+                    "type": "object",
+                    "required": [
+                      "code",
+                      "message",
+                      "requestId"
+                    ],
+                    "properties": {
+                      "code": {
+                        "minLength": 1,
+                        "maxLength": 200,
+                        "type": "string"
+                      },
+                      "message": {
+                        "minLength": 1,
+                        "maxLength": 500,
+                        "type": "string"
+                      },
+                      "requestId": {
+                        "minLength": 1,
+                        "maxLength": 100,
+                        "type": "string"
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          }
+        },
+        "403": {
+          "description": "Default Response",
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "required": [
+                  "error"
+                ],
+                "properties": {
+                  "error": {
+                    "type": "object",
+                    "required": [
+                      "code",
+                      "message",
+                      "requestId"
+                    ],
+                    "properties": {
+                      "code": {
+                        "minLength": 1,
+                        "maxLength": 200,
+                        "type": "string"
+                      },
+                      "message": {
+                        "minLength": 1,
+                        "maxLength": 500,
+                        "type": "string"
+                      },
+                      "requestId": {
+                        "minLength": 1,
+                        "maxLength": 100,
+                        "type": "string"
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          }
+        },
+        "404": {
+          "description": "Default Response",
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "required": [
+                  "error"
+                ],
+                "properties": {
+                  "error": {
+                    "type": "object",
+                    "required": [
+                      "code",
+                      "message",
+                      "requestId"
+                    ],
+                    "properties": {
+                      "code": {
+                        "minLength": 1,
+                        "maxLength": 200,
+                        "type": "string"
+                      },
+                      "message": {
+                        "minLength": 1,
+                        "maxLength": 500,
+                        "type": "string"
+                      },
+                      "requestId": {
+                        "minLength": 1,
+                        "maxLength": 100,
+                        "type": "string"
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          }
+        },
+        "409": {
+          "description": "Default Response",
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "required": [
+                  "error"
+                ],
+                "properties": {
+                  "error": {
+                    "type": "object",
+                    "required": [
+                      "code",
+                      "message",
+                      "requestId"
+                    ],
+                    "properties": {
+                      "code": {
+                        "minLength": 1,
+                        "maxLength": 200,
+                        "type": "string"
+                      },
+                      "message": {
+                        "minLength": 1,
+                        "maxLength": 500,
+                        "type": "string"
+                      },
+                      "requestId": {
+                        "minLength": 1,
+                        "maxLength": 100,
+                        "type": "string"
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          }
+        },
+        "413": {
+          "description": "Default Response",
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "required": [
+                  "error"
+                ],
+                "properties": {
+                  "error": {
+                    "type": "object",
+                    "required": [
+                      "code",
+                      "message",
+                      "requestId"
+                    ],
+                    "properties": {
+                      "code": {
+                        "minLength": 1,
+                        "maxLength": 200,
+                        "type": "string"
+                      },
+                      "message": {
+                        "minLength": 1,
+                        "maxLength": 500,
+                        "type": "string"
+                      },
+                      "requestId": {
+                        "minLength": 1,
+                        "maxLength": 100,
+                        "type": "string"
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          }
+        },
+        "429": {
+          "description": "Default Response",
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "required": [
+                  "error"
+                ],
+                "properties": {
+                  "error": {
+                    "type": "object",
+                    "required": [
+                      "code",
+                      "message",
+                      "requestId"
+                    ],
+                    "properties": {
+                      "code": {
+                        "minLength": 1,
+                        "maxLength": 200,
+                        "type": "string"
+                      },
+                      "message": {
+                        "minLength": 1,
+                        "maxLength": 500,
+                        "type": "string"
+                      },
+                      "requestId": {
+                        "minLength": 1,
+                        "maxLength": 100,
+                        "type": "string"
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          }
+        },
+        "500": {
+          "description": "Default Response",
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "required": [
+                  "error"
+                ],
+                "properties": {
+                  "error": {
+                    "type": "object",
+                    "required": [
+                      "code",
+                      "message",
+                      "requestId"
+                    ],
+                    "properties": {
+                      "code": {
+                        "minLength": 1,
+                        "maxLength": 200,
+                        "type": "string"
+                      },
+                      "message": {
+                        "minLength": 1,
+                        "maxLength": 500,
+                        "type": "string"
+                      },
+                      "requestId": {
+                        "minLength": 1,
+                        "maxLength": 100,
+                        "type": "string"
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          }
+        },
+        "503": {
+          "description": "Default Response",
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "required": [
+                  "error"
+                ],
+                "properties": {
+                  "error": {
+                    "type": "object",
+                    "required": [
+                      "code",
+                      "message",
+                      "requestId"
+                    ],
+                    "properties": {
+                      "code": {
+                        "minLength": 1,
+                        "maxLength": 200,
+                        "type": "string"
+                      },
+                      "message": {
+                        "minLength": 1,
+                        "maxLength": 500,
+                        "type": "string"
+                      },
+                      "requestId": {
+                        "minLength": 1,
+                        "maxLength": 100,
+                        "type": "string"
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    {
+      "operationId": "readMasterTimetableAvailability",
+      "method": "GET",
+      "path": "/api/v1/master/academic/timetable/availability",
+      "permission": "academic.timetable.read",
+      "parameters": [
+        {
+          "schema": {
+            "pattern": "^\\d{4}-\\d{2}-\\d{2}$",
+            "type": "string"
+          },
+          "in": "query",
+          "name": "date",
+          "required": true
+        },
+        {
+          "schema": {
+            "pattern": "^(?:0|[1-9]|1[0-4])$",
+            "type": "string"
+          },
+          "in": "query",
+          "name": "periodIndex",
+          "required": true
+        }
+      ],
+      "responses": {
+        "200": {
+          "description": "Default Response",
+          "content": {
+            "application/json": {
+              "schema": {
+                "additionalProperties": false,
+                "type": "object",
+                "required": [
+                  "data"
+                ],
+                "properties": {
+                  "data": {
+                    "type": "object",
+                    "required": [
+                      "state",
+                      "publication",
+                      "items"
+                    ],
+                    "properties": {
+                      "state": {
+                        "anyOf": [
+                          {
+                            "type": "string",
+                            "enum": [
+                              "PROVEN"
+                            ]
+                          },
+                          {
+                            "type": "string",
+                            "enum": [
+                              "NO_SCHEDULE"
+                            ]
+                          },
+                          {
+                            "type": "string",
+                            "enum": [
+                              "UNPROVEN"
+                            ]
+                          },
+                          {
+                            "type": "string",
+                            "enum": [
+                              "CONFLICT"
+                            ]
+                          }
+                        ]
+                      },
+                      "publication": {
+                        "type": "object",
+                        "required": [
+                          "id",
+                          "academicYearId",
+                          "sourceVersionLabel",
+                          "effectiveFrom"
+                        ],
+                        "properties": {
+                          "id": {
+                            "format": "uuid",
+                            "type": "string"
+                          },
+                          "academicYearId": {
+                            "format": "uuid",
+                            "type": "string"
+                          },
+                          "sourceVersionLabel": {
+                            "minLength": 1,
+                            "maxLength": 40,
+                            "type": "string"
+                          },
+                          "effectiveFrom": {
+                            "minLength": 1,
+                            "maxLength": 10,
+                            "type": "string"
+                          }
+                        },
+                        "nullable": true
+                      },
+                      "items": {
+                        "maxItems": 500,
+                        "type": "array",
+                        "items": {
+                          "type": "object",
+                          "required": [
+                            "staffId"
+                          ],
+                          "properties": {
+                            "staffId": {
+                              "format": "uuid",
+                              "type": "string"
+                            }
+                          }
+                        }
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          }
+        },
+        "201": {
+          "description": "Default Response",
+          "content": {
+            "application/json": {
+              "schema": {
+                "additionalProperties": false,
+                "type": "object",
+                "required": [
+                  "data"
+                ],
+                "properties": {
+                  "data": {
+                    "type": "object",
+                    "required": [
+                      "state",
+                      "publication",
+                      "items"
+                    ],
+                    "properties": {
+                      "state": {
+                        "anyOf": [
+                          {
+                            "type": "string",
+                            "enum": [
+                              "PROVEN"
+                            ]
+                          },
+                          {
+                            "type": "string",
+                            "enum": [
+                              "NO_SCHEDULE"
+                            ]
+                          },
+                          {
+                            "type": "string",
+                            "enum": [
+                              "UNPROVEN"
+                            ]
+                          },
+                          {
+                            "type": "string",
+                            "enum": [
+                              "CONFLICT"
+                            ]
+                          }
+                        ]
+                      },
+                      "publication": {
+                        "type": "object",
+                        "required": [
+                          "id",
+                          "academicYearId",
+                          "sourceVersionLabel",
+                          "effectiveFrom"
+                        ],
+                        "properties": {
+                          "id": {
+                            "format": "uuid",
+                            "type": "string"
+                          },
+                          "academicYearId": {
+                            "format": "uuid",
+                            "type": "string"
+                          },
+                          "sourceVersionLabel": {
+                            "minLength": 1,
+                            "maxLength": 40,
+                            "type": "string"
+                          },
+                          "effectiveFrom": {
+                            "minLength": 1,
+                            "maxLength": 10,
+                            "type": "string"
+                          }
+                        },
+                        "nullable": true
+                      },
+                      "items": {
+                        "maxItems": 500,
+                        "type": "array",
+                        "items": {
+                          "type": "object",
+                          "required": [
+                            "staffId"
+                          ],
+                          "properties": {
+                            "staffId": {
+                              "format": "uuid",
+                              "type": "string"
+                            }
+                          }
+                        }
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          }
+        },
+        "400": {
+          "description": "Default Response",
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "required": [
+                  "error"
+                ],
+                "properties": {
+                  "error": {
+                    "type": "object",
+                    "required": [
+                      "code",
+                      "message",
+                      "requestId"
+                    ],
+                    "properties": {
+                      "code": {
+                        "minLength": 1,
+                        "maxLength": 200,
+                        "type": "string"
+                      },
+                      "message": {
+                        "minLength": 1,
+                        "maxLength": 500,
+                        "type": "string"
+                      },
+                      "requestId": {
+                        "minLength": 1,
+                        "maxLength": 100,
+                        "type": "string"
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          }
+        },
+        "401": {
+          "description": "Default Response",
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "required": [
+                  "error"
+                ],
+                "properties": {
+                  "error": {
+                    "type": "object",
+                    "required": [
+                      "code",
+                      "message",
+                      "requestId"
+                    ],
+                    "properties": {
+                      "code": {
+                        "minLength": 1,
+                        "maxLength": 200,
+                        "type": "string"
+                      },
+                      "message": {
+                        "minLength": 1,
+                        "maxLength": 500,
+                        "type": "string"
+                      },
+                      "requestId": {
+                        "minLength": 1,
+                        "maxLength": 100,
+                        "type": "string"
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          }
+        },
+        "403": {
+          "description": "Default Response",
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "required": [
+                  "error"
+                ],
+                "properties": {
+                  "error": {
+                    "type": "object",
+                    "required": [
+                      "code",
+                      "message",
+                      "requestId"
+                    ],
+                    "properties": {
+                      "code": {
+                        "minLength": 1,
+                        "maxLength": 200,
+                        "type": "string"
+                      },
+                      "message": {
+                        "minLength": 1,
+                        "maxLength": 500,
+                        "type": "string"
+                      },
+                      "requestId": {
+                        "minLength": 1,
+                        "maxLength": 100,
+                        "type": "string"
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          }
+        },
+        "404": {
+          "description": "Default Response",
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "required": [
+                  "error"
+                ],
+                "properties": {
+                  "error": {
+                    "type": "object",
+                    "required": [
+                      "code",
+                      "message",
+                      "requestId"
+                    ],
+                    "properties": {
+                      "code": {
+                        "minLength": 1,
+                        "maxLength": 200,
+                        "type": "string"
+                      },
+                      "message": {
+                        "minLength": 1,
+                        "maxLength": 500,
+                        "type": "string"
+                      },
+                      "requestId": {
+                        "minLength": 1,
+                        "maxLength": 100,
+                        "type": "string"
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          }
+        },
+        "409": {
+          "description": "Default Response",
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "required": [
+                  "error"
+                ],
+                "properties": {
+                  "error": {
+                    "type": "object",
+                    "required": [
+                      "code",
+                      "message",
+                      "requestId"
+                    ],
+                    "properties": {
+                      "code": {
+                        "minLength": 1,
+                        "maxLength": 200,
+                        "type": "string"
+                      },
+                      "message": {
+                        "minLength": 1,
+                        "maxLength": 500,
+                        "type": "string"
+                      },
+                      "requestId": {
+                        "minLength": 1,
+                        "maxLength": 100,
+                        "type": "string"
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          }
+        },
+        "413": {
+          "description": "Default Response",
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "required": [
+                  "error"
+                ],
+                "properties": {
+                  "error": {
+                    "type": "object",
+                    "required": [
+                      "code",
+                      "message",
+                      "requestId"
+                    ],
+                    "properties": {
+                      "code": {
+                        "minLength": 1,
+                        "maxLength": 200,
+                        "type": "string"
+                      },
+                      "message": {
+                        "minLength": 1,
+                        "maxLength": 500,
+                        "type": "string"
+                      },
+                      "requestId": {
+                        "minLength": 1,
+                        "maxLength": 100,
+                        "type": "string"
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          }
+        },
+        "429": {
+          "description": "Default Response",
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "required": [
+                  "error"
+                ],
+                "properties": {
+                  "error": {
+                    "type": "object",
+                    "required": [
+                      "code",
+                      "message",
+                      "requestId"
+                    ],
+                    "properties": {
+                      "code": {
+                        "minLength": 1,
+                        "maxLength": 200,
+                        "type": "string"
+                      },
+                      "message": {
+                        "minLength": 1,
+                        "maxLength": 500,
+                        "type": "string"
+                      },
+                      "requestId": {
+                        "minLength": 1,
+                        "maxLength": 100,
+                        "type": "string"
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          }
+        },
+        "500": {
+          "description": "Default Response",
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "required": [
+                  "error"
+                ],
+                "properties": {
+                  "error": {
+                    "type": "object",
+                    "required": [
+                      "code",
+                      "message",
+                      "requestId"
+                    ],
+                    "properties": {
+                      "code": {
+                        "minLength": 1,
+                        "maxLength": 200,
+                        "type": "string"
+                      },
+                      "message": {
+                        "minLength": 1,
+                        "maxLength": 500,
+                        "type": "string"
+                      },
+                      "requestId": {
+                        "minLength": 1,
+                        "maxLength": 100,
+                        "type": "string"
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          }
+        },
+        "503": {
+          "description": "Default Response",
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "required": [
+                  "error"
+                ],
+                "properties": {
+                  "error": {
+                    "type": "object",
+                    "required": [
+                      "code",
+                      "message",
+                      "requestId"
+                    ],
+                    "properties": {
+                      "code": {
+                        "minLength": 1,
+                        "maxLength": 200,
+                        "type": "string"
+                      },
+                      "message": {
+                        "minLength": 1,
+                        "maxLength": 500,
+                        "type": "string"
+                      },
+                      "requestId": {
+                        "minLength": 1,
+                        "maxLength": 100,
+                        "type": "string"
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  ],
+  "bounds": {
+    "dateRangeInclusiveDays": 31,
+    "validIsoDatesRequired": true,
+    "periodIndexMinimum": 0,
+    "periodIndexMaximum": 14,
+    "availabilityMaximumItems": 500,
+    "availabilityOverflow": "ERROR_NOT_TRUNCATION"
+  },
+  "dataStates": [
+    "PROVEN",
+    "NO_SCHEDULE",
+    "UNPROVEN",
+    "CONFLICT"
+  ],
+  "semantics": {
+    "emptyItemsForStates": [
+      "NO_SCHEDULE",
+      "UNPROVEN",
+      "CONFLICT"
+    ],
+    "positiveAvailabilityOnly": true,
+    "historicalCurrentFallback": false,
+    "noSchedule": "No applicable publication for the requested date/scope.",
+    "provenEmpty": "An applicable proven publication with no matching lessons/availability returns PROVEN with an empty list.",
+    "unresolved": "UNPROVEN is incomplete evidence; CONFLICT is contradictory evidence. Return no guessed items.",
+    "weekends": "PROVEN empty when a publication applies and there are no recurring rows; this does not assert school is open.",
+    "staffDisplayIdentity": "Use the separately published master.staff-directory contract; no Staff display identity is duplicated here."
+  },
+  "authorization": {
+    "authentication": "Use an approved Core-authenticated actor/session at the owning Master API.",
+    "permission": "academic.timetable.read",
+    "capabilityAvailabilityGrantsPermission": false,
+    "installationGrantsPermission": false,
+    "requiredCapabilityBehavior": "Fail safely when the required provider is unavailable or incompatible.",
+    "productionReadiness": "Public/source contract readiness does not prove production deployment or runtime grants."
+  }
+}
