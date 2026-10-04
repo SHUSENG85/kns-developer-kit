@@ -1,0 +1,13 @@
+{
+  "kitVersion": "1.0.0",
+  "developerPackVersion": "1.0.0",
+  "sourceRepository": "SHUSENG85/KNS-PLATFORM",
+  "sourceCommit": "0758a9506b1f44d8888a2b816f7cd3e0838026e2",
+  "publicationMode": "reviewed-allowlist",
+  "mirroredFiles": [
+    "KNS-MODULE-DEVELOPER-PACK.md",
+    "docs/module-guide.md",
+    "docs/kns-module-package-v1.md"
+  ],
+  "note": "Machine-readable external contracts/SDK/UI surfaces are not yet published; do not infer missing interfaces."
+}
