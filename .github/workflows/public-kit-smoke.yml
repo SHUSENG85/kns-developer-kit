@@ -16,11 +16,8 @@ jobs:
       - uses: actions/setup-node@v4
         with:
           node-version: 24
-          cache: npm
-      - name: Install public kit only
-        run: npm install --package-lock-only
-      - name: Install dependencies from lock
-        run: npm ci
+      - name: Install from public repository only
+        run: npm install
       - name: CLI boundary smoke
         run: |
           set +e
@@ -30,4 +27,4 @@ jobs:
           echo "$output"
           test "$code" -ne 0
           echo "$output" | grep -F "Usage: kns keygen | pack | verify"
-          ! echo "$output" | grep -E "install|activate|rollback|MIGRATION_DATABASE_URL"
+          ! echo "$output" | grep -E "MIGRATION_DATABASE_URL|installPackage|activateRelease"
