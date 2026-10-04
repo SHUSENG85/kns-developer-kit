@@ -1,0 +1,14 @@
+{
+  "name": "@kns/module-toolchain",
+  "version": "0.1.0",
+  "private": true,
+  "type": "module",
+  "exports": {
+    ".": "./src/index.ts"
+  },
+  "dependencies": {
+    "@kns/contracts": "0.1.0",
+    "@sinclair/typebox": "^0.34.0",
+    "libpg-query": "18.1.5"
+  }
+}
