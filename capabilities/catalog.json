@@ -1,0 +1,175 @@
+{
+  "catalogVersion": "1.0.0",
+  "platformContract": "2",
+  "capabilities": [
+    {
+      "id": "master.academic-years",
+      "version": "1.0.0",
+      "ownerDomain": "academic",
+      "description": "Authoritative academic year identity and lifecycle lookup",
+      "sensitivity": "INTERNAL",
+      "contractReference": "/api/v1/master/academic/years/{id}",
+      "permissions": [
+        "academic.read"
+      ],
+      "relatedEvents": [
+        "master.academic.structure.changed.v1"
+      ]
+    },
+    {
+      "id": "master.class-teacher-assignments",
+      "version": "1.2.0",
+      "ownerDomain": "academic",
+      "description": "Canonical class-teacher relationship, history, immutable exact-date Exam observations and delegated current self scope",
+      "sensitivity": "SENSITIVE",
+      "contractReference": "/api/v1/master/academic/classes/{id}/class-teacher",
+      "permissions": [
+        "academic.read"
+      ],
+      "relatedEvents": []
+    },
+    {
+      "id": "master.classes",
+      "version": "1.1.0",
+      "ownerDomain": "academic",
+      "description": "Authoritative academic class identity and status lookup",
+      "sensitivity": "INTERNAL",
+      "contractReference": "/api/v1/master/academic/classes/{id}",
+      "permissions": [
+        "academic.read"
+      ],
+      "relatedEvents": [
+        "master.academic.structure.changed.v1"
+      ]
+    },
+    {
+      "id": "master.exam-report-identities",
+      "version": "1.0.0",
+      "ownerDomain": "students",
+      "description": "Purpose-bound immutable exact-date pupil report identity for delegated Exam verification",
+      "sensitivity": "HIGHLY_SENSITIVE",
+      "contractReference": "/api/v1/master/exam/report-identities:resolve",
+      "permissions": [
+        "students.report-identity.read"
+      ],
+      "relatedEvents": []
+    },
+    {
+      "id": "master.organisation-units",
+      "version": "1.0.0",
+      "ownerDomain": "organisation",
+      "description": "Authoritative organisation unit identity and status lookup",
+      "sensitivity": "INTERNAL",
+      "contractReference": "/api/v1/master/organisation/units/{id}",
+      "permissions": [
+        "organisation.read"
+      ],
+      "relatedEvents": [
+        "master.organisation.unit.changed.v1"
+      ]
+    },
+    {
+      "id": "master.pupil-enrolments",
+      "version": "1.0.0",
+      "ownerDomain": "students",
+      "description": "Canonical pupil school-year enrolment, class history and dated placement proof",
+      "sensitivity": "SENSITIVE",
+      "contractReference": "/api/v1/master/students/{pupilId}/enrolments/{yearId}/current",
+      "permissions": [
+        "students.directory.read"
+      ],
+      "relatedEvents": []
+    },
+    {
+      "id": "master.religious-subject-assignments",
+      "version": "1.0.0",
+      "ownerDomain": "students",
+      "description": "Governed per-enrolment PI or PM applicability without exposing religion",
+      "sensitivity": "SENSITIVE",
+      "contractReference": "/api/v1/master/enrolments/{enrollmentId}/religious-subject",
+      "permissions": [
+        "students.religious_subject.read"
+      ],
+      "relatedEvents": []
+    },
+    {
+      "id": "master.school-profile",
+      "version": "1.1.0",
+      "ownerDomain": "school",
+      "description": "Authoritative school name, address, canonical Staff-backed principal and optional logo reference",
+      "sensitivity": "INTERNAL",
+      "contractReference": "/api/v1/master/school-profile",
+      "permissions": [
+        "school.profile.read"
+      ],
+      "relatedEvents": []
+    },
+    {
+      "id": "master.staff-directory",
+      "version": "1.0.0",
+      "ownerDomain": "staff",
+      "description": "Authoritative staff identity and status lookup",
+      "sensitivity": "SENSITIVE",
+      "contractReference": "/api/v1/master/staff/{id}",
+      "permissions": [
+        "staff.directory.read"
+      ],
+      "relatedEvents": [
+        "master.staff.created.v1",
+        "master.staff.lifecycle.changed.v1"
+      ]
+    },
+    {
+      "id": "master.subjects",
+      "version": "1.1.0",
+      "ownerDomain": "academic",
+      "description": "Governed canonical Subject catalogue, lifecycle/name history and applied-timetable annual Subject projection",
+      "sensitivity": "INTERNAL",
+      "contractReference": "/api/v1/master/academic/subjects/{id}",
+      "permissions": [
+        "academic.read"
+      ],
+      "relatedEvents": [
+        "master.academic.structure.changed.v1"
+      ]
+    },
+    {
+      "id": "master.teaching-assignments",
+      "version": "1.0.0",
+      "ownerDomain": "academic",
+      "description": "Reviewed class-subject offerings and staff teaching relationships with observation precision",
+      "sensitivity": "SENSITIVE",
+      "contractReference": "/api/v1/master/academic/teaching-assignments/{id}",
+      "permissions": [
+        "academic.teaching-assignment.read"
+      ],
+      "relatedEvents": []
+    },
+    {
+      "id": "master.unit-memberships",
+      "version": "1.0.0",
+      "ownerDomain": "organisation",
+      "description": "Dated staff membership of organisation units",
+      "sensitivity": "SENSITIVE",
+      "contractReference": "/api/v1/master/organisation/units/{id}",
+      "permissions": [
+        "organisation.read"
+      ],
+      "relatedEvents": [
+        "master.organisation.membership.changed.v1"
+      ]
+    },
+    {
+      "id": "media.image-assets",
+      "version": "1.0.0",
+      "ownerDomain": "media",
+      "description": "Immutable governed image assets with controlled display variants",
+      "sensitivity": "INTERNAL",
+      "contractReference": "/api/v1/media/images/{id}",
+      "permissions": [
+        "media.image.read"
+      ],
+      "relatedEvents": []
+    }
+  ]
+}
