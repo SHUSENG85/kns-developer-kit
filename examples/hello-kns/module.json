@@ -1,0 +1,44 @@
+{
+  "packageSpecVersion": "1.0.0",
+  "module": {
+    "id": "hello",
+    "name": "Hello KNS",
+    "version": "0.1.0",
+    "owner": "example",
+    "frontendBasePath": "/hello/",
+    "apiBasePath": "/api/v1/hello",
+    "healthPath": "/api/v1/hello/health",
+    "permissions": [
+      "hello.read"
+    ],
+    "ownedSchemas": [],
+    "eventsProduced": [],
+    "eventsConsumed": [],
+    "providesCapabilities": [],
+    "requiredCapabilities": [],
+    "optionalCapabilities": [],
+    "requiredPlatformContract": "2",
+    "rollback": "previous-release"
+  },
+  "shape": "B",
+  "source": {
+    "commit": "0000000000000000000000000000000000000000",
+    "releaseId": "hello-kns-example"
+  },
+  "compatibility": {
+    "platformContract": "2",
+    "upgradeFrom": [],
+    "rollbackTo": []
+  },
+  "artifacts": {
+    "frontend": "frontend",
+    "apiImage": {
+      "path": "api/image.oci.tar",
+      "digest": "sha256:0000000000000000000000000000000000000000000000000000000000000000"
+    },
+    "openapi": "contracts/openapi.json",
+    "migrations": [],
+    "releaseEvidence": "verification/release-evidence.json"
+  },
+  "requiredSecrets": []
+}
