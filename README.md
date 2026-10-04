@@ -2,56 +2,62 @@
 
 Official public developer entrypoint for building independently deployable modules for the **KNS School Platform**.
 
+## Status
+
+**Developer Kit v1.2.0 — THIRD-PARTY READY**
+
+The public kit now contains the reviewed developer documentation, executable package contracts, Browser SDK, Server Kit, UI Kit, developer-safe `.knsmod` toolchain, and the buildable `hello-kns` reference module.
+
+The public-only acceptance workflow verifies installation, typechecking/tests, a real linux/amd64 non-root OCI build, release construction, disposable developer key generation, `.knsmod` packing, and offline verification.
+
+This status means a third-party developer can build and statically verify a KNS module using this public repository alone. It does **not** grant production trust, installation permission, role permissions, or access to KNS production data. Platform-dependent validation and installation remain operator-controlled.
+
 ## Start here
 
 Read **[KNS-MODULE-DEVELOPER-PACK.md](./KNS-MODULE-DEVELOPER-PACK.md)** completely before changing or generating code.
 
-This repository is designed for developers who may have no prior knowledge of KNS. The Developer Pack tells a coding agent how to discover the required KNS contracts, complete the design gates, respect Core/Master Data ownership, verify the implementation, and produce an installable `.knsmod` release.
+Then use **[examples/hello-kns](./examples/hello-kns/README.md)** as the executable reference.
 
 ## Quick start
 
-You need:
-
-1. this repository;
-2. a coding agent such as Codex or Claude Code;
-3. a short description of the real school workflow the module should support.
-
-Give the agent this instruction:
+Requirements: Node.js 24 and Docker with a buildx builder capable of OCI export.
 
 ~~~text
-Read KNS-MODULE-DEVELOPER-PACK.md completely before changing code.
-
-You are developing a third-party module for KNS. Assume I do not know KNS internals.
-Follow the Developer Pack. Do not invent KNS APIs, capabilities, permissions or data structures.
-
-Module idea: <describe the real school workflow here>
-
-Start with the design gates. Do not implement until the module design is approved.
-Final delivery must include a valid signed .knsmod package and the required verification evidence.
+npm ci
+npm test
+npm run example:build
+npm run kns -- keygen <key-id> <dir-outside-the-repository> --module <module-id>
+npm run kns -- pack <release-dir> --key <private.pem> --key-id <key-id> --out <dir>
+npm run kns -- verify <package.knsmod> --trust <trust-store.json>
 ~~~
 
-## Published developer documents
+A successful offline package verification ends in `PACKAGE_VERIFIED`. This proves package integrity and static policy only; KNS Module Manager performs platform-dependent validation before review/install.
+
+## Developer surfaces
 
 - [KNS Module Developer Pack v1](./KNS-MODULE-DEVELOPER-PACK.md)
 - [Canonical Module Development Guide](./docs/module-guide.md)
 - [KNS Module Package v1 specification](./docs/kns-module-package-v1.md)
-- [Generated module manifest schema](./contracts/module-v2.schema.json)
-- [Generated database access schema](./contracts/database-access.schema.json)
-- [Generated package manifest schema](./contracts/package-manifest.schema.json)
-- [Generated signature schema](./contracts/signature.schema.json)
-- [Generated release evidence schema](./contracts/release-evidence.schema.json)
+- [Executable JSON Schemas](./contracts/)
+- [Browser SDK](./sdk/)
+- [Server Kit](./server-kit/)
+- [UI Kit](./ui/)
+- [Developer-safe CLI/toolchain](./tooling/)
+- [hello-kns reference module](./examples/hello-kns/)
 - [Changelog](./CHANGELOG.md)
 
-## Security and ownership boundary
+## Architecture and security boundary
 
-This is a public developer distribution repository, not the private KNS production source repository.
+Core owns shared identity, authentication, authorization and platform capabilities. Master Data owns canonical school master data. Business modules must not duplicate canonical Master Data or create an independent identity authority.
 
-Never put production passwords, private keys, service tokens, session cookies, production database copies, raw pupil IC datasets, or other secrets/personal datasets in a module project or support request.
+This public repository is a reviewed distribution, not the private KNS production source repository. Never put production passwords, private keys, service tokens, session cookies, production database copies, raw pupil IC datasets, or other secrets/personal datasets in a module project or support request.
 
-If a required KNS contract or capability cannot be verified from the published developer materials, stop and report the missing dependency instead of inventing an interface.
+If a required KNS contract or capability cannot be proven from the published kit, treat it as unavailable and report the dependency instead of inventing an interface.
 
-## Current status
+## Version boundaries
 
-**Developer Pack v1.0.0 — RELEASED**
+- Developer Kit distribution: **1.2.0**
+- Developer Pack: **1.0.0**
+- KNS Module Package specification: **1.0.0**
 
-Machine-readable package/module schemas are now generated from the executable private KNS contracts and mirrored here. Reviewed SDK/server-kit integration surfaces, shared UI references and a safe example module remain later publication phases. Until those surfaces are published here, treat them as unavailable rather than guessing from internal behavior.
+These versions describe different contracts and do not advance together.
