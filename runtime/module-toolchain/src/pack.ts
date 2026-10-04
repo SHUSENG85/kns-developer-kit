@@ -1,4 +1,4 @@
-import { lstat, readdir, readFile, realpath, writeFile } from 'node:fs/promises';
+import { lstat, mkdir, readdir, readFile, realpath, writeFile } from 'node:fs/promises';
 import { join, relative, resolve, sep } from 'node:path';
 import {
   KNSMOD_PACKAGE_SPEC,
@@ -126,6 +126,7 @@ export async function packModule(options: {
   const outputDir = resolve(options.outputDir);
   if (outputDir === input || outputDir.startsWith(input + sep) || relative(input, outputDir) === '')
     throw new Error('output directory must be outside the release input');
+  await mkdir(outputDir, { recursive: true }); // only after the outside-the-input check above
   const file = join(outputDir, packageFileName(manifest.moduleId, manifest.moduleVersion));
   await writeFile(file, archive, { flag: 'wx' }); // immutable: never overwrite a release package
   if ((await lstat(file)).size !== archive.length) throw new Error('package write incomplete');
