@@ -1,0 +1,68 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://smkkn.top/developer-contract/v1/release-evidence.schema.json",
+  "additionalProperties": false,
+  "type": "object",
+  "required": [
+    "moduleId",
+    "moduleVersion",
+    "sourceCommit",
+    "runtime",
+    "commands"
+  ],
+  "properties": {
+    "moduleId": {
+      "pattern": "^[a-z][a-z0-9-]{1,39}$",
+      "type": "string"
+    },
+    "moduleVersion": {
+      "pattern": "^\\d+\\.\\d+\\.\\d+(?:-[a-zA-Z0-9.-]+)?$",
+      "type": "string"
+    },
+    "sourceCommit": {
+      "pattern": "^[a-f0-9]{40}$",
+      "type": "string"
+    },
+    "runtime": {
+      "minLength": 1,
+      "maxLength": 80,
+      "type": "string"
+    },
+    "commands": {
+      "minItems": 1,
+      "maxItems": 100,
+      "type": "array",
+      "items": {
+        "additionalProperties": false,
+        "type": "object",
+        "required": [
+          "command",
+          "result"
+        ],
+        "properties": {
+          "command": {
+            "minLength": 1,
+            "maxLength": 500,
+            "type": "string"
+          },
+          "result": {
+            "anyOf": [
+              {
+                "const": "PASS",
+                "type": "string"
+              },
+              {
+                "const": "FAIL",
+                "type": "string"
+              }
+            ]
+          },
+          "summary": {
+            "maxLength": 500,
+            "type": "string"
+          }
+        }
+      }
+    }
+  }
+}
