@@ -12,21 +12,28 @@ const args=process.argv.slice(2);
 const flag=(name:string)=>{const i=args.indexOf(`--${name}`);return i>=0?args[i+1]:undefined};
 const command=args[0];
 
-const fail=(message:string):never=>{throw new Error(message)};
+function fail(message:string):never{throw new Error(message)}
 await loadSqlParser();
 
 if(command==='keygen'){
-  const keyId=args[1], out=args[2];
-  if(!keyId||!out||!/^[a-z0-9][a-z0-9._-]{2,79}$/.test(keyId))
-    fail('Usage: kns keygen <key-id> <output-dir>');
+  const keyId=args[1], out=args[2], moduleId=flag('module');
+  if(!keyId||!out||!/^[a-z0-9][a-z0-9._-]{2,79}$/.test(keyId)||(moduleId!==undefined&&!/^[a-z][a-z0-9-]{1,39}$/.test(moduleId)))
+    fail('Usage: kns keygen <key-id> <output-dir> [--module <module-id>]');
   await mkdir(out,{recursive:true});
   const key=generatePublisherKey();
   const file=join(out,`${keyId}.private.pem`);
   await writeFile(file,key.privateKeyPem,{flag:'wx',mode:0o600});
   await chmod(file,0o600);
+  const entry={keyId,publicKey:key.publicKey,modules:[moduleId??'<module-id>'],revoked:false};
   console.log(`Private key written to ${file} (keep it secret; never commit or package it).`);
   console.log('Public trust entry (KNS operator must explicitly approve trust and module scope):');
-  console.log(JSON.stringify({keyId,publicKey:key.publicKey,modules:['<module-id>'],revoked:false},null,2));
+  console.log(JSON.stringify(entry,null,2));
+  if(moduleId){
+    // Public data only. This lets you run offline `kns verify` against your own key; it grants nothing.
+    const trust=join(out,`${keyId}.trust-store.json`);
+    await writeFile(trust,`${JSON.stringify({keys:[entry]},null,2)}\n`,{flag:'wx'});
+    console.log(`Local trust store for offline verify written to ${trust}`);
+  }
 }else if(command==='pack'){
   const input=args[1], keyPath=flag('key'), keyId=flag('key-id');
   if(!input||!keyPath||!keyId)
