@@ -12,7 +12,7 @@ const moduleFields = {
   frontendBasePath: Type.String({ pattern: '^/[a-z][a-z0-9-]*/$' }),
   apiBasePath: Type.String({ pattern: '^/api/v1/[a-z][a-z0-9-]*$' }),
   permissions: Type.Array(Text(100), { minItems: 1, uniqueItems: true }),
-  ownedSchemas: Type.Array(Type.String({ pattern: '^[a-z][a-z0-9_]*
+  ownedSchemas: Type.Array(Type.String({ pattern: '^[a-z][a-z0-9_]*$' }), { uniqueItems: true }),
   eventsProduced: Type.Array(Type.String({ pattern: '^[a-z]+(?:\\.[a-z]+)+\\.v[1-9][0-9]*$' })),
   eventsConsumed: Type.Array(Type.String({ pattern: '^[a-z]+(?:\\.[a-z]+)+\\.v[1-9][0-9]*$' })),
   healthPath: Type.String({ pattern: '^/api/v1/[a-z][a-z0-9-]*/health$' }),
