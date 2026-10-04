@@ -17,7 +17,7 @@ jobs:
         with:
           node-version: 24
       - name: Install from public repository only
-        run: npm install
+        run: npm ci
       - name: CLI boundary smoke
         run: |
           set +e
@@ -28,3 +28,23 @@ jobs:
           test "$code" -ne 0
           echo "$output" | grep -F "Usage: kns keygen | pack | verify"
           ! echo "$output" | grep -E "MIGRATION_DATABASE_URL|installPackage|activateRelease"
+      - name: Typecheck and tests
+        run: |
+          npm run typecheck
+          npm test
+      - name: Docker builder with OCI exporter
+        run: docker buildx create --name kns-devkit --driver docker-container --use
+      - name: Build hello-kns release (frontend, API OCI image, evidence)
+        run: npm run example:build
+      - name: Keygen, pack and offline verify with a disposable key outside the repository
+        run: |
+          key_dir="$RUNNER_TEMP/kns-keys"
+          out_dir="$RUNNER_TEMP/kns-package"
+          npm run --silent kns -- keygen ci-developer-key "$key_dir" --module hello
+          npm run --silent kns -- pack build/hello-kns/release \
+            --key "$key_dir/ci-developer-key.private.pem" --key-id ci-developer-key --out "$out_dir"
+          output=$(npm run --silent kns -- verify "$out_dir/kns-hello-0.1.0.knsmod" \
+            --trust "$key_dir/ci-developer-key.trust-store.json")
+          echo "$output"
+          echo "$output" | head -n 1 | grep -E '^PACKAGE_VERIFIED  hello@0\.1\.0  sha256 [a-f0-9]{64}$'
+          sha256sum "$out_dir/kns-hello-0.1.0.knsmod"
