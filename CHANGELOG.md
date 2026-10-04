@@ -1,5 +1,17 @@
 # Changelog
 
+## 1.2.1
+
+Developer Kit v1 completion patch.
+
+Fixed and clarified:
+- corrected capability discovery schema links to the published `contracts/` paths;
+- made `capabilities/catalog.json` the explicit public capability-discovery starting point;
+- clarified that a catalog entry without the required published callable operation remains unavailable to third-party implementation;
+- aligned repository package metadata with the Developer Kit distribution version.
+
+No production trust, permission grants or unpublished platform interfaces are added by this patch.
+
 ## 1.2.0
 
 Third-party-ready public Developer Kit release.
