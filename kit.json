@@ -1,10 +1,10 @@
 {
-  "kitVersion": "1.2.1",
+  "kitVersion": "1.3.0",
   "status": "THIRD-PARTY READY",
   "developerPackVersion": "1.0.0",
   "packageSpecVersion": "1.0.0",
   "sourceRepository": "SHUSENG85/KNS-PLATFORM",
-  "sourceCommit": "859b33ca99874699617caaeab8b336534516e477",
+  "sourceCommit": "438824b72223e3875ef69d1d4bb6aefa4301f763",
   "publicationMode": "reviewed-allowlist",
   "surfaces": [
     "developer-pack",
@@ -16,14 +16,14 @@
     "ui-kit",
     "module-toolchain",
     "hello-kns-reference",
-    "public-ci"
+    "public-ci",
+    "capability-discovery",
+    "master-timetable-callable"
   ],
   "acceptance": {
     "publicRepository": "SHUSENG85/kns-developer-kit",
     "workflow": "Public Kit Smoke",
-    "runNumber": 38,
-    "conclusion": "success",
-    "verifiedFlow": [
+    "requiredFlow": [
       "npm ci",
       "CLI boundary",
       "typecheck and tests",
@@ -32,7 +32,9 @@
       "disposable keygen",
       "knsmod pack",
       "offline verify"
-    ]
+    ],
+    "criterion": "Normal PR CI must pass before merge; accepted run is recorded in the private dated verification record."
   },
-  "note": "THIRD-PARTY READY means the public kit is sufficient to build and statically verify a module using only published contracts. Missing callable capability contracts remain explicit blockers; production trust, platform-dependent validation, installation, enablement and permission grants remain operator-controlled."
+  "note": "THIRD-PARTY READY means the public kit is sufficient to build and statically verify a module using only published contracts. Missing callable capability contracts remain explicit blockers; production trust, platform-dependent validation, installation, enablement and permission grants remain operator-controlled.",
+  "governingBlueprint": "4.3"
 }

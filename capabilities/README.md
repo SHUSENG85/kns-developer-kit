@@ -24,9 +24,14 @@ This request is an architecture/governance input for the KNS owner. It does not 
 
 ## Example: MMI relief
 
-A relief module can discover `master.staff-directory@1.0.0` in the catalog. If it also needs a canonical teacher timetable and no timetable capability is listed, the correct result is a capability request for that missing canonical dataset. The MMI module must remain blocked on that dependency rather than creating its own timetable authority.
+A relief module can discover `master.staff-directory@1.0.0` and `master.timetable@1.0.0` and inspect their published callable contracts. It must declare compatible dependencies and obtain the separate Core permissions before calling the owning Master APIs. The timetable contract provides canonical slots and positive availability evidence; it does not implement relief decisions. Any further missing canonical contract requires a capability request rather than a local substitute for canonical authority.
 
 ## Machine-readable files
+
+- `master.timetable.v1.json` - generated callable contract for `master.timetable@1.0.0`: staff/class date ranges and positive availability by date/period, including the accepted parameters, responses, bounds and data states.
+- `../contracts/capability-callable.schema.json` - validates the generated timetable callable-contract envelope. The existing Staff Directory v1 file retains its accepted earlier shape.
+
+Timetable queries require `academic.timetable.read` separately from capability discovery or installation. Ranges are inclusive and at most 31 days; availability is limited to 500 with an error on overflow. `PROVEN`, `NO_SCHEDULE`, `UNPROVEN` and `CONFLICT` describe data proof, separately from provider health. Unresolved states contain no guessed items. Availability requires positive evidence; absence of a lesson is not proof of free time. Historical queries never fall back to a current timetable. Weekend acceptance does not assert that school is open.
 
 - `catalog.json` — generated from capabilities actually provided by reviewed KNS module manifests.
 - `master.staff-directory.v1.json` — published callable contract for `master.staff-directory@1.0.0`, including list/detail request and response shapes.

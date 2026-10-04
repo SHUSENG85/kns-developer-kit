@@ -4,7 +4,10 @@ Official public developer entrypoint for building independently deployable modul
 
 ## Status
 
-**Developer Kit v1.2.1 — THIRD-PARTY READY**
+**Developer Kit v1.3.0 — THIRD-PARTY READY**
+
+Blueprint v4.3 governs the published module guidance. This release adds the accepted
+`master.timetable@1.0.0` callable contract, including staff/class slots and positive availability.
 
 The public kit now contains the reviewed developer documentation, executable package contracts, Browser SDK, Server Kit, UI Kit, developer-safe `.knsmod` toolchain, and the buildable `hello-kns` reference module.
 
@@ -38,6 +41,7 @@ A successful offline package verification ends in `PACKAGE_VERIFIED`. This prove
 - [KNS Module Developer Pack v1](./KNS-MODULE-DEVELOPER-PACK.md)
 - [Canonical Module Development Guide](./docs/module-guide.md)
 - [KNS Module Package v1 specification](./docs/kns-module-package-v1.md)
+- [Capability discovery and callable contracts](./capabilities/README.md)
 - [Executable JSON Schemas](./contracts/)
 - [Browser SDK](./sdk/)
 - [Server Kit](./server-kit/)
@@ -56,7 +60,7 @@ If a required KNS contract or capability cannot be proven from the published kit
 
 ## Version boundaries
 
-- Developer Kit distribution: **1.2.1**
+- Developer Kit distribution: **1.3.0**
 - Developer Pack: **1.0.0**
 - KNS Module Package specification: **1.0.0**
 

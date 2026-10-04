@@ -1,5 +1,17 @@
 # Changelog
 
+## 1.3.0
+
+Feature release under governing Blueprint v4.3.
+
+- Published `master.timetable@1.0.0` with three accepted Master GET operations, parameters, responses, bounds and data proof states.
+- Reconciled private/public capability discovery authority and retained Staff Directory callable bytes.
+- Added public-only timetable discovery/schema/dependency tests and updated module architecture guidance.
+- Corrected generated Module v2 schema to match executable packaging, including modules with no owned schema.
+
+Runtime permission, positive data evidence and provider health remain separate. This release does
+not assert a deployed timetable provider or grant `academic.timetable.read`.
+
 ## 1.2.1
 
 Developer Kit v1 completion patch.
