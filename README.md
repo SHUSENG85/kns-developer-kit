@@ -4,7 +4,7 @@ Official public developer entrypoint for building independently deployable modul
 
 ## Status
 
-**Developer Kit v1.2.0 — THIRD-PARTY READY**
+**Developer Kit v1.2.1 — THIRD-PARTY READY**
 
 The public kit now contains the reviewed developer documentation, executable package contracts, Browser SDK, Server Kit, UI Kit, developer-safe `.knsmod` toolchain, and the buildable `hello-kns` reference module.
 
@@ -52,11 +52,11 @@ Core owns shared identity, authentication, authorization and platform capabiliti
 
 This public repository is a reviewed distribution, not the private KNS production source repository. Never put production passwords, private keys, service tokens, session cookies, production database copies, raw pupil IC datasets, or other secrets/personal datasets in a module project or support request.
 
-If a required KNS contract or capability cannot be proven from the published kit, treat it as unavailable and report the dependency instead of inventing an interface.
+If a required KNS contract or capability cannot be proven from the published kit, treat it as unavailable and report the dependency instead of inventing an interface. Start capability discovery at [`capabilities/catalog.json`](./capabilities/catalog.json); a catalog entry still requires a published callable contract for the operation you need.
 
 ## Version boundaries
 
-- Developer Kit distribution: **1.2.0**
+- Developer Kit distribution: **1.2.1**
 - Developer Pack: **1.0.0**
 - KNS Module Package specification: **1.0.0**
 
