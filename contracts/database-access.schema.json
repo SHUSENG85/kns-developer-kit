@@ -1,0 +1,80 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://smkkn.top/developer-contract/v1/database-access.schema.json",
+  "additionalProperties": false,
+  "type": "object",
+  "required": [
+    "schemas"
+  ],
+  "properties": {
+    "schemas": {
+      "type": "object",
+      "patternProperties": {
+        "^[a-z][a-z0-9_]{0,62}$": {
+          "additionalProperties": false,
+          "type": "object",
+          "required": [
+            "tables",
+            "sequences"
+          ],
+          "properties": {
+            "tables": {
+              "type": "object",
+              "patternProperties": {
+                "^[a-z][a-z0-9_]{0,62}$": {
+                  "minItems": 1,
+                  "maxItems": 4,
+                  "uniqueItems": true,
+                  "type": "array",
+                  "items": {
+                    "anyOf": [
+                      {
+                        "const": "SELECT",
+                        "type": "string"
+                      },
+                      {
+                        "const": "INSERT",
+                        "type": "string"
+                      },
+                      {
+                        "const": "UPDATE",
+                        "type": "string"
+                      },
+                      {
+                        "const": "DELETE",
+                        "type": "string"
+                      }
+                    ]
+                  }
+                }
+              }
+            },
+            "sequences": {
+              "type": "object",
+              "patternProperties": {
+                "^[a-z][a-z0-9_]{0,62}$": {
+                  "minItems": 1,
+                  "maxItems": 2,
+                  "uniqueItems": true,
+                  "type": "array",
+                  "items": {
+                    "anyOf": [
+                      {
+                        "const": "USAGE",
+                        "type": "string"
+                      },
+                      {
+                        "const": "SELECT",
+                        "type": "string"
+                      }
+                    ]
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+}
