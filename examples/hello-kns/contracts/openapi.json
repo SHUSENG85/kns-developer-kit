@@ -1,0 +1,45 @@
+{
+  "openapi": "3.1.0",
+  "info": {
+    "title": "Hello KNS API",
+    "version": "0.1.0"
+  },
+  "paths": {
+    "/api/v1/hello/health": {
+      "get": {
+        "operationId": "helloHealth",
+        "responses": {
+          "200": {
+            "description": "Healthy"
+          }
+        }
+      }
+    },
+    "/api/v1/hello/version": {
+      "get": {
+        "operationId": "helloVersion",
+        "responses": {
+          "200": {
+            "description": "Version"
+          }
+        }
+      }
+    },
+    "/api/v1/hello": {
+      "get": {
+        "operationId": "helloRead",
+        "responses": {
+          "200": {
+            "description": "Greeting"
+          },
+          "401": {
+            "description": "Unauthenticated"
+          },
+          "403": {
+            "description": "Forbidden"
+          }
+        }
+      }
+    }
+  }
+}
