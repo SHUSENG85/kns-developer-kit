@@ -110,6 +110,8 @@ For a deliberately limited third-party contract bundle, the KNS owner must provi
 
 **Fail-closed rule:** if you cannot prove a required KNS contract or capability exists, treat it as unavailable. Never invent it.
 
+For the public Developer Kit, inspect `capabilities/catalog.json` first. A catalog entry proves that the capability ID/version is published, but implementation still requires a published callable contract for the operation the module needs. If a required canonical capability is absent, create a request conforming to `contracts/capability-request.schema.json`; do not create a placeholder capability or duplicate the canonical dataset.
+
 ## 3. Required platform inputs
 
 A developer/agent must use, when applicable:
