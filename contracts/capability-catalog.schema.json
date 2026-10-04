@@ -1,0 +1,100 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://smkkn.top/developer-contract/v1/capability-catalog.schema.json",
+  "additionalProperties": false,
+  "type": "object",
+  "required": [
+    "catalogVersion",
+    "platformContract",
+    "capabilities"
+  ],
+  "properties": {
+    "catalogVersion": {
+      "const": "1.0.0",
+      "type": "string"
+    },
+    "platformContract": {
+      "const": "2",
+      "type": "string"
+    },
+    "capabilities": {
+      "type": "array",
+      "items": {
+        "additionalProperties": false,
+        "type": "object",
+        "required": [
+          "id",
+          "version",
+          "ownerDomain",
+          "description",
+          "sensitivity",
+          "contractReference",
+          "permissions",
+          "relatedEvents"
+        ],
+        "properties": {
+          "id": {
+            "pattern": "^[a-z][a-z0-9-]*(?:\\.[a-z][a-z0-9-]*)+$",
+            "type": "string"
+          },
+          "version": {
+            "pattern": "^[1-9][0-9]*\\.[0-9]+\\.[0-9]+$",
+            "type": "string"
+          },
+          "ownerDomain": {
+            "minLength": 1,
+            "maxLength": 80,
+            "type": "string"
+          },
+          "description": {
+            "minLength": 1,
+            "maxLength": 500,
+            "type": "string"
+          },
+          "sensitivity": {
+            "anyOf": [
+              {
+                "const": "PUBLIC",
+                "type": "string"
+              },
+              {
+                "const": "INTERNAL",
+                "type": "string"
+              },
+              {
+                "const": "SENSITIVE",
+                "type": "string"
+              },
+              {
+                "const": "HIGHLY_SENSITIVE",
+                "type": "string"
+              }
+            ]
+          },
+          "contractReference": {
+            "pattern": "^/api/v1/[a-z][a-z0-9-]*/",
+            "type": "string"
+          },
+          "permissions": {
+            "minItems": 1,
+            "uniqueItems": true,
+            "type": "array",
+            "items": {
+              "minLength": 1,
+              "maxLength": 100,
+              "type": "string"
+            }
+          },
+          "relatedEvents": {
+            "uniqueItems": true,
+            "type": "array",
+            "items": {
+              "pattern": "^[a-z]+(?:\\.[a-z]+)+\\.v[1-9][0-9]*$",
+              "type": "string"
+            }
+          }
+        }
+      }
+    }
+  }
+}
