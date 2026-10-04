@@ -1,0 +1,21 @@
+{
+  "name": "kns-developer-kit",
+  "version": "1.1.0",
+  "private": true,
+  "type": "module",
+  "engines": {
+    "node": ">=24 <25"
+  },
+  "scripts": {
+    "kns": "node --import tsx tooling/kns.ts"
+  },
+  "dependencies": {
+    "@sinclair/typebox": "^0.34.0",
+    "libpg-query": "18.1.5",
+    "tsx": "^4.23.15"
+  },
+  "workspaces": [
+    "runtime/contracts",
+    "runtime/module-toolchain"
+  ]
+}
