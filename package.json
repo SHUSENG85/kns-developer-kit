@@ -7,12 +7,24 @@
     "node": ">=24 <25"
   },
   "scripts": {
-    "kns": "node --import tsx tooling/kns.ts"
+    "kns": "node --import tsx tooling/kns.ts",
+    "test": "node --import tsx --test \"tests/*.test.ts\"",
+    "typecheck": "tsc --noEmit",
+    "example:build": "node --import tsx tooling/build-example.ts"
   },
   "dependencies": {
     "@sinclair/typebox": "^0.34.0",
+    "esbuild": "^0.28.2",
     "libpg-query": "18.1.5",
+    "react": "^19.2.0",
+    "react-dom": "^19.2.0",
     "tsx": "^4.23.15"
+  },
+  "devDependencies": {
+    "@types/node": "^24.0.0",
+    "@types/react": "^19.2.0",
+    "@types/react-dom": "^19.2.0",
+    "typescript": "~5.8.3"
   },
   "workspaces": [
     "runtime/contracts",
