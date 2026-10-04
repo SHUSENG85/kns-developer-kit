@@ -1,13 +1,38 @@
 {
-  "kitVersion": "1.0.0",
+  "kitVersion": "1.2.0",
+  "status": "THIRD-PARTY READY",
   "developerPackVersion": "1.0.0",
+  "packageSpecVersion": "1.0.0",
   "sourceRepository": "SHUSENG85/KNS-PLATFORM",
-  "sourceCommit": "0758a9506b1f44d8888a2b816f7cd3e0838026e2",
+  "sourceCommit": "859b33ca99874699617caaeab8b336534516e477",
   "publicationMode": "reviewed-allowlist",
-  "mirroredFiles": [
-    "KNS-MODULE-DEVELOPER-PACK.md",
-    "docs/module-guide.md",
-    "docs/kns-module-package-v1.md"
+  "surfaces": [
+    "developer-pack",
+    "module-guide",
+    "package-spec",
+    "json-schemas",
+    "browser-sdk",
+    "server-kit",
+    "ui-kit",
+    "module-toolchain",
+    "hello-kns-reference",
+    "public-ci"
   ],
-  "note": "Machine-readable external contracts/SDK/UI surfaces are not yet published; do not infer missing interfaces."
+  "acceptance": {
+    "publicRepository": "SHUSENG85/kns-developer-kit",
+    "workflow": "Public Kit Smoke",
+    "runNumber": 38,
+    "conclusion": "success",
+    "verifiedFlow": [
+      "npm ci",
+      "CLI boundary",
+      "typecheck and tests",
+      "linux/amd64 OCI build",
+      "hello-kns release build",
+      "disposable keygen",
+      "knsmod pack",
+      "offline verify"
+    ]
+  },
+  "note": "THIRD-PARTY READY means the public kit is sufficient to build and statically verify a module. Production trust, platform-dependent validation, installation, enablement and permission grants remain operator-controlled."
 }
