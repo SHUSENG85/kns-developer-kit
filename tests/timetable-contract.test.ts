@@ -10,18 +10,64 @@ const addFormats = require('ajv-formats');
 const read = (path: string) => readFile(new URL(`../${path}`, import.meta.url), 'utf8');
 const json = async (path: string) => JSON.parse(await read(path));
 
-test('public timetable feature release uses governing v4.3 authority', async () => {
-  assert.equal((await json('package.json')).version, '1.3.0');
+test('public release identity names governing v4.1 authority consistently', async () => {
+  const version = (await json('package.json')).version;
+  assert.equal(version, '1.4.0');
+  const kit = await json('kit.json');
+  assert.equal(kit.kitVersion, version);
+  assert.equal(kit.governingBlueprint, '4.1');
   const guide = await read('docs/module-guide.md');
   const pack = await read('KNS-MODULE-DEVELOPER-PACK.md');
+  const readme = await read('README.md');
   assert.ok(
-    /1\. KNS Master Blueprint v4\.3;/.test(guide),
-    'module guide must identify governing v4.3',
+    /1\. KNS Master Blueprint v4\.1;/.test(guide),
+    'module guide must identify governing v4.1',
   );
   assert.ok(
-    /Governing blueprint:\*\* KNS Master Architecture Blueprint v4\.3/.test(pack),
-    'Developer Pack must identify governing v4.3',
+    /v4\.2 and v4\.3 are preserved historical successor\/adoption records and do not override v4\.1/.test(
+      guide,
+    ),
+    'module guide must keep v4.2/v4.3 historical',
   );
+  assert.ok(
+    /Governing blueprint:\*\* KNS Master Architecture Blueprint v4\.1/.test(pack),
+    'Developer Pack must identify governing v4.1',
+  );
+  assert.ok(/1\. `platform\/docs\/blueprint\/v4\.1-master-blueprint\.md`;/.test(pack));
+  assert.ok(readme.includes(`Developer Kit v${version} `));
+  for (const [name, text] of [
+    ['module guide', guide],
+    ['Developer Pack', pack],
+    ['README', readme],
+  ]) {
+    assert.doesNotMatch(
+      text,
+      /Blueprint v4\.[23] governs|governing Blueprint v4\.[23]|Architecture Blueprint v4\.[23]|v4\.[23]-master-blueprint\.md/,
+      `${name} must not promote v4.2/v4.3 to governing authority`,
+    );
+  }
+});
+
+test('Module v2 schema accepts only well-formed optional elevated authority bundles', async () => {
+  const { module } = await json('examples/hello-kns/module.json');
+  const ajv = new Ajv2020({ strict: true });
+  const validate = ajv.compile(await json('contracts/module-v2.schema.json'));
+  assert.ok(validate(module), ajv.errorsText(validate.errors));
+  const bundle = { id: 'hello.admin', permissions: ['hello.admin'] };
+  assert.ok(
+    validate({ ...module, elevatedAuthorities: [bundle] }),
+    ajv.errorsText(validate.errors),
+  );
+  for (const elevatedAuthorities of [
+    [{ id: 'hello.admin', permissions: [] }],
+    [{ id: 'Hello', permissions: ['hello.admin'] }],
+    [{ id: 'hello.admin', permissions: ['hello.admin', 'hello.admin'] }],
+    [{ ...bundle, grant: true }],
+    [bundle, bundle],
+    bundle,
+  ]) {
+    assert.equal(validate({ ...module, elevatedAuthorities }), false);
+  }
 });
 
 test('public-only discovery validates timetable callable shape, states and bounds', async () => {

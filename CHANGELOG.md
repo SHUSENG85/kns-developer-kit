@@ -1,5 +1,22 @@
 # Changelog
 
+## 1.4.0
+
+Authority and contract reconciliation under governing Blueprint v4.1.
+
+- Corrected the Developer Pack, module guide, README and `kit.json` to name Blueprint v4.1 as the
+  governing authority; v4.2 and v4.3 are preserved historical records that do not override it.
+- Published the relationship-first module guidance: declare owned/consumed entities and
+  relationships before implementation, and promote missing canonical relationships through the
+  owning domain instead of copying them.
+- Reconciled the Module v2 schema and runtime contract with the executable platform contract:
+  a module may declare optional `elevatedAuthorities` bundles (`id` plus at least one unique
+  permission). A declaration grants nothing; Core only recognizes a bundle whose permissions the
+  module itself declares, and appointments remain operator-controlled.
+
+Existing manifests remain valid. This release adds no capability, asserts no production
+deployment and grants no permission.
+
 ## 1.3.0
 
 Feature release under governing Blueprint v4.3.

@@ -18,6 +18,13 @@ const moduleFields = {
   healthPath: Type.String({ pattern: '^/api/v1/[a-z][a-z0-9-]*/health$' }),
   rollback: Type.Literal('previous-release'),
 };
+const ElevatedAuthorityBundleSchema = Type.Object(
+  {
+    id: Type.String({ pattern: '^[a-z][a-z0-9.-]{1,99}$' }),
+    permissions: Type.Array(Text(100), { minItems: 1, uniqueItems: true }),
+  },
+  { additionalProperties: false },
+);
 export const ModuleV1Schema = Type.Object(
   { ...moduleFields, requiredPlatformContract: Type.Literal('1') },
   { additionalProperties: false },
@@ -46,6 +53,10 @@ export const ModuleV2Schema = Type.Object(
     providesCapabilities: Type.Array(CapabilitySchema),
     requiredCapabilities: Type.Array(CapabilityRequirementSchema),
     optionalCapabilities: Type.Array(CapabilityRequirementSchema),
+    // Module-owned bundles Core may recognize as eligibility for the session's ELEVATED mode.
+    elevatedAuthorities: Type.Optional(
+      Type.Array(ElevatedAuthorityBundleSchema, { uniqueItems: true }),
+    ),
   },
   { additionalProperties: false },
 );
