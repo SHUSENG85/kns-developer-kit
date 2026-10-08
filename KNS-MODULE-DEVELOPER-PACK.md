@@ -2,7 +2,7 @@
 
 **Pack version:** 1.0.0\
 **Status:** RELEASED — third-party developer/agent bootstrap contract; not a production deployment procedure\
-**Governing blueprint:** KNS Master Architecture Blueprint v4.3
+**Governing blueprint:** KNS Master Architecture Blueprint v4.1
 
 This is the stable entrypoint given to an independent KNS module developer or coding agent.
 It does not replace the governing architecture. It tells the agent what to read, what it may own,
@@ -82,7 +82,7 @@ Runtime compatibility is determined by declared platform/capability/package cont
 
 Use this order:
 
-1. `platform/docs/blueprint/v4.3-master-blueprint.md`;
+1. `platform/docs/blueprint/v4.1-master-blueprint.md`;
 2. current architecture documentation;
 3. `platform/docs/handoff/module-guide.md`;
 4. module-specific approved design documents.
@@ -97,7 +97,7 @@ Repository paths in this Pack are discovery pointers, not permission to invent m
 For a full KNS repository checkout, verify at minimum that these inputs exist before implementation:
 
 ~~~text
-platform/docs/blueprint/v4.3-master-blueprint.md
+platform/docs/blueprint/v4.1-master-blueprint.md
 platform/docs/handoff/module-guide.md
 platform/docs/architecture/kns-module-package-v1.md
 platform/packages/contracts
@@ -112,7 +112,8 @@ For a deliberately limited third-party contract bundle, the KNS owner must provi
 
 For the public Developer Kit, inspect `capabilities/catalog.json` first. A catalog entry proves that the capability ID/version is published, but implementation still requires a published callable contract for the operation the module needs. If a required canonical capability is absent, create a request conforming to `contracts/capability-request.schema.json`; do not create a placeholder capability or duplicate the canonical dataset.
 
-The public `docs/module-guide.md` reflects governing Blueprint v4.3. The full private Blueprint
+The public `docs/module-guide.md` reflects governing Blueprint v4.1; v4.2 and v4.3 are preserved
+historical records and do not override it. The full private Blueprint
 and Data Capability Readiness Registry remain owner architecture and diagnostic inputs; they
 are not consumer runtime contracts. Public callable contracts come from accepted provider
 manifests and OpenAPI. Core authorization remains a separate requirement, and publication does

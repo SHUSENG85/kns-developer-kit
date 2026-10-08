@@ -7,14 +7,14 @@ rolling back and handing off an independently developed KNS module.
 
 It does not replace higher architecture authority. When rules conflict, use this order:
 
-1. KNS Master Blueprint v4.3;
+1. KNS Master Blueprint v4.1;
 2. current architecture documentation;
 3. this module guide;
 4. module-specific approved design documents.
 
-Blueprint v4.2 is the predecessor; v4.1 remains a historical implementation-validated baseline.
+Blueprint v4.2 and v4.3 are preserved historical successor/adoption records and do not override v4.1 under the current authority rule.
 
-Blueprint v4.3 governs data capability readiness. The public Developer Kit distributes reviewed
+The current Canonical Data Contract Architecture (private architecture record `platform/docs/architecture/canonical-data-contracts.md`, not distributed in the public kit) governs the v4.1-compatible relationship-first refinement. Data capability readiness remains a useful supporting model, not a higher architecture authority. The public Developer Kit distributes reviewed
 catalog entries and callable contracts derived from accepted provider contracts. Consumers must
 prove both the capability ID/version and the operation they need before implementation, declare
 the dependency, and use the owning domain API for canonical data. Source workbooks, legacy data,
@@ -61,8 +61,9 @@ It still uses the shared platform for:
 
 Independent does **not** mean duplicating Core or Master.
 
-A module must never create a second canonical source for staff, pupils, classes, enrolments,
-subjects, identity or platform permissions.
+A module must never create a second canonical source for staff, pupils, classes, enrolments, subjects, identity or platform permissions.
+
+Before implementation, a module must also declare Owned Entities, Owned Relationships, Consumed Canonical Entities, Consumed Relationships, Required Provider/Capability Contracts and Permissions. If a needed canonical relationship exists but is not exposed, promote it through the owning domain; do not copy it into the consumer.
 
 ---
 
@@ -280,6 +281,17 @@ for authority.
 
 Display caches, denormalized snapshots or historical evidence are allowed only when an approved
 design explicitly requires them and clearly states they are not canonical authority.
+
+Canonical Master relationships are first-class owned data, not joins that each module reconstructs.
+When a module needs a relationship such as Enrollment, ClassTeacherAssignment, TeachingAssignment
+or ClassSubjectOffering, first determine whether Master already owns the semantic fact and whether a
+stable provider operation exposes it. If the fact exists but the contract is missing, stop at that
+dependency boundary and create the smallest Master/provider promotion work order.
+
+A new or changed intake profile that affects reusable Master data must define its entity-resolution
+and relationship-resolution rules, provenance, ambiguity/conflict behavior and unresolved-reference
+path. Ambiguous references must fail closed into an owner-controlled resolution workflow; they must
+not be guessed, silently dropped or converted into duplicate canonical entities.
 
 ## Business module owns
 

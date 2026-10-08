@@ -2,7 +2,7 @@
 
 **Specification (packageSpecVersion):** 1.0.0\
 **Status:** IMPLEMENTED AND SANDBOX-PROVEN on branch (`@kns/contracts/knsmod`, `@kns/server-kit` `knsmod`, Core Module Manager) — not merged, not deployed\
-**Governing blueprint:** KNS Master Architecture Blueprint v4.2
+**Governing blueprint:** KNS Master Architecture Blueprint v4.1 (v4.2 and v4.3 are preserved historical records)
 
 ## 1. Purpose
 
@@ -400,7 +400,7 @@ The restricted migrator login remains the enforcement boundary.
 | PostgreSQL-grammar migration checks + adversarial corpus | IMPLEMENTED, TESTED |
 | ENABLED-only permission lifecycle (Core) | IMPLEMENTED, TESTED, SANDBOX-PROVEN |
 | Module Manager API (Core) and UI (Staff) | IMPLEMENTED, TESTED, SANDBOX-PROVEN (API); UI tested by rendering |
-| upload -> quarantine -> validate -> review -> install -> enable -> upgrade -> rollback | SANDBOX-PROVEN on the KNS host ([record](../verification/2026-10-03-knsmod-lifecycle-proof-host.md)); not deployed |
+| upload -> quarantine -> validate -> review -> install -> enable -> upgrade -> rollback | SANDBOX-PROVEN on the KNS host (private verification record `platform/docs/verification/2026-10-03-knsmod-lifecycle-proof-host.md`); not deployed |
 | Capability-providing packages, operator-provisioned secrets | NOT IMPLEMENTED (refused at install) |
 
 Production deployment plan: `docs/handoff/knsmod-production-deployment-plan.md` (not executed).

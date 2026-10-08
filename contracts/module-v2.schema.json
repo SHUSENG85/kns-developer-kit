@@ -212,6 +212,34 @@
           }
         }
       }
+    },
+    "elevatedAuthorities": {
+      "uniqueItems": true,
+      "type": "array",
+      "items": {
+        "additionalProperties": false,
+        "type": "object",
+        "required": [
+          "id",
+          "permissions"
+        ],
+        "properties": {
+          "id": {
+            "pattern": "^[a-z][a-z0-9.-]{1,99}$",
+            "type": "string"
+          },
+          "permissions": {
+            "minItems": 1,
+            "uniqueItems": true,
+            "type": "array",
+            "items": {
+              "minLength": 1,
+              "maxLength": 100,
+              "type": "string"
+            }
+          }
+        }
+      }
     }
   }
 }
