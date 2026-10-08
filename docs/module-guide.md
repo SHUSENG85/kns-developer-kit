@@ -14,7 +14,7 @@ It does not replace higher architecture authority. When rules conflict, use this
 
 Blueprint v4.2 and v4.3 are preserved historical successor/adoption records and do not override v4.1 under the current authority rule.
 
-The current [Canonical Data Contract Architecture](../architecture/canonical-data-contracts.md) governs the v4.1-compatible relationship-first refinement. Data capability readiness remains a useful supporting model, not a higher architecture authority. The public Developer Kit distributes reviewed
+The current Canonical Data Contract Architecture (private architecture record `platform/docs/architecture/canonical-data-contracts.md`, not distributed in the public kit) governs the v4.1-compatible relationship-first refinement. Data capability readiness remains a useful supporting model, not a higher architecture authority. The public Developer Kit distributes reviewed
 catalog entries and callable contracts derived from accepted provider contracts. Consumers must
 prove both the capability ID/version and the operation they need before implementation, declare
 the dependency, and use the owning domain API for canonical data. Source workbooks, legacy data,

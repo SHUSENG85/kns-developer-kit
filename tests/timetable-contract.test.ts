@@ -2,7 +2,8 @@ import assert from 'node:assert/strict';
 import test from 'node:test';
 import { createHash } from 'node:crypto';
 import { createRequire } from 'node:module';
-import { readFile } from 'node:fs/promises';
+import { access, readFile } from 'node:fs/promises';
+import { posix } from 'node:path';
 
 const require = createRequire(import.meta.url);
 const Ajv2020 = require('ajv/dist/2020.js');
@@ -35,16 +36,36 @@ test('public release identity names governing v4.1 authority consistently', asyn
   );
   assert.ok(/1\. `platform\/docs\/blueprint\/v4\.1-master-blueprint\.md`;/.test(pack));
   assert.ok(readme.includes(`Developer Kit v${version} `));
+  const packageSpec = await read('docs/kns-module-package-v1.md');
+  assert.ok(
+    /Governing blueprint:\*\* KNS Master Architecture Blueprint v4\.1/.test(packageSpec),
+    'package specification must identify governing v4.1',
+  );
   for (const [name, text] of [
     ['module guide', guide],
     ['Developer Pack', pack],
     ['README', readme],
+    ['package specification', packageSpec],
   ]) {
     assert.doesNotMatch(
       text,
       /Blueprint v4\.[23] governs|governing Blueprint v4\.[23]|Architecture Blueprint v4\.[23]|v4\.[23]-master-blueprint\.md/,
       `${name} must not promote v4.2/v4.3 to governing authority`,
     );
+  }
+  for (const path of [
+    'README.md',
+    'KNS-MODULE-DEVELOPER-PACK.md',
+    'docs/module-guide.md',
+    'docs/kns-module-package-v1.md',
+  ]) {
+    for (const [, target] of (await read(path)).matchAll(/\]\(([^)#\s]+)(?:#[^)]*)?\)/g)) {
+      if (/^[a-z]+:/i.test(target)) continue;
+      await assert.doesNotReject(
+        access(new URL(`../${posix.join(posix.dirname(path), target)}`, import.meta.url)),
+        `${path} links to ${target}, which the public kit does not contain`,
+      );
+    }
   }
 });
 

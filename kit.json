@@ -4,7 +4,7 @@
   "developerPackVersion": "1.0.0",
   "packageSpecVersion": "1.0.0",
   "sourceRepository": "SHUSENG85/KNS-PLATFORM",
-  "sourceCommit": "aae5478907ed362504a0674a50f15cfc99a5c543",
+  "sourceCommit": "bc45e4f10274763c9ab5c3ba948284bcd50f13c0",
   "publicationMode": "reviewed-allowlist",
   "surfaces": [
     "developer-pack",
