@@ -121,7 +121,7 @@
     },
     {
       "id": "master.subjects",
-      "version": "1.1.0",
+      "version": "1.2.0",
       "ownerDomain": "academic",
       "description": "Governed canonical Subject catalogue, lifecycle/name history and applied-timetable annual Subject projection",
       "sensitivity": "INTERNAL",
@@ -185,3 +185,4 @@
     }
   ]
 }
+
