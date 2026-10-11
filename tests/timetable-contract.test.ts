@@ -11,21 +11,22 @@ const addFormats = require('ajv-formats');
 const read = (path: string) => readFile(new URL(`../${path}`, import.meta.url), 'utf8');
 const json = async (path: string) => JSON.parse(await read(path));
 
-test('public release identity names governing v4.1 authority consistently', async () => {
+test('public release distinguishes v5 direction from v4.1 technical compatibility', async () => {
   const version = (await json('package.json')).version;
   assert.equal(version, '1.4.0');
   const kit = await json('kit.json');
   assert.equal(kit.kitVersion, version);
   assert.equal(kit.governingBlueprint, '4.1');
   const guide = await read('docs/module-guide.md');
+  assert.match(guide, /2\. v4\.1 and current architecture documentation for unresolved implementation contracts;/);
   const pack = await read('KNS-MODULE-DEVELOPER-PACK.md');
   const readme = await read('README.md');
   assert.ok(
-    /1\. KNS Master Blueprint v4\.1;/.test(guide),
-    'module guide must identify governing v4.1',
+    /1\. KNS One Master Blueprint v5\.0 for approved architecture direction;/.test(guide),
+    'module guide must identify Owner-approved v5.0 direction',
   );
   assert.ok(
-    /v4\.2 and v4\.3 are preserved historical successor\/adoption records and do not override v4\.1/.test(
+    /v4\.2 and v4\.3 are preserved historical successor\/adoption records and do not override the v5 direction or unresolved v4\.1 implementation contracts/.test(
       guide,
     ),
     'module guide must keep v4.2/v4.3 historical',
