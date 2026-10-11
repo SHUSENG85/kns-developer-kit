@@ -7,14 +7,14 @@ rolling back and handing off an independently developed KNS module.
 
 It does not replace higher architecture authority. When rules conflict, use this order:
 
-1. KNS Master Blueprint v4.1;
-2. current architecture documentation;
+1. KNS One Master Blueprint v5.0 for approved architecture direction;
+2. v4.1 and current architecture documentation for unresolved implementation contracts;
 3. this module guide;
 4. module-specific approved design documents.
 
-Blueprint v4.2 and v4.3 are preserved historical successor/adoption records and do not override v4.1 under the current authority rule.
+Blueprint v4.2 and v4.3 are preserved historical successor/adoption records and do not override the v5 direction or unresolved v4.1 implementation contracts.
 
-The current Canonical Data Contract Architecture (private architecture record `platform/docs/architecture/canonical-data-contracts.md`, not distributed in the public kit) governs the v4.1-compatible relationship-first refinement. Data capability readiness remains a useful supporting model, not a higher architecture authority. The public Developer Kit distributes reviewed
+The current Canonical Data Contract Architecture (private architecture record `platform/docs/architecture/canonical-data-contracts.md`, not distributed in the public kit) governs the currently accepted relationship-first implementation contracts until reviewed v5 replacements exist. Data capability readiness remains a useful supporting model, not a higher architecture authority. The public Developer Kit distributes reviewed
 catalog entries and callable contracts derived from accepted provider contracts. Consumers must
 prove both the capability ID/version and the operation they need before implementation, declare
 the dependency, and use the owning domain API for canonical data. Source workbooks, legacy data,
